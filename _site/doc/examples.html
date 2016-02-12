@@ -44,7 +44,7 @@
             <li data-order=""><a href="/pyscopus/doc/use-pyscopus.html">Use PyScopus</a></li>
         
             
-            <li data-order=""><a href="/pyscopus/doc/scopus-api.html">Scopus API</a></li>
+            <li data-order=""><a href="/pyscopus/doc/scopus-api.html">API Index</a></li>
         
     
         
@@ -82,18 +82,21 @@ First we search for a spefic author:</p>
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">scopus</span> <span class="kn">import</span> <span class="n">Scopus</span>
 <span class="n">scopus</span> <span class="o">=</span> <span class="n">Scopus</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 <span class="c"># search for Andrew Ng</span>
-<span class="n">query_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">'affil'</span><span class="p">:</span> <span class="s">'Stanford University'</span><span class="p">,</span> <span class="s">'authfirst'</span><span class="p">:</span> <span class="s">'Andrew'</span><span class="p">,</span> <span class="s">'authlast'</span><span class="p">:</span> <span class="s">'Ng'</span><span class="p">}</span></code></pre></figure>
+<span class="n">query_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">'affil'</span><span class="p">:</span> <span class="s">'Stanford University'</span><span class="p">,</span> <span class="s">'authfirst'</span><span class="p">:</span> <span class="s">'Andrew'</span><span class="p">,</span> <span class="s">'authlast'</span><span class="p">:</span> <span class="s">'Ng'</span><span class="p">}</span>
+<span class="n">author_results</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search_author</span><span class="p">(</span><span class="n">query_dict</span><span class="p">)</span></code></pre></figure>
 
-<p>This gives:</p>
+<p>This returns <code class="highlighter-rouge">author_results</code> as a <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html">Panda DataFrame object</a> and print the following output:</p>
 <pre><code>A total number of  1  records for the query.
            affiliation    author_id  document_count       name
 0  Stanford University  35410071600             165  Andrew Ng
 </code></pre>
 
-<p>Then we search for his publication information:</p>
+<p>Then we search for his publication information using his unique author id <code class="highlighter-rouge">35410071600</code>:</p>
 
-<p>This yields:</p>
-<pre><code>A total number of  165  records for author  35410071600
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">andrew_pubs</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search_author_publication</span><span class="p">(</span><span class="s">'35410071600'</span><span class="p">)</span></code></pre></figure>
+
+<p><code class="highlighter-rouge">andrew_pubs</code> is also a DataFrame object and the search will output a list of publication names:</p>
+<pre class="longoutput"><code>A total number of  165  records for author  35410071600
 0 Mechatronic design of an integrated robotic hand...
 1 Parsing with compositional vector grammars...
 2 Recursive deep models for semantic compositionality over a sentiment...
@@ -260,6 +263,29 @@ First we search for a spefic author:</p>
 163 Applying online search techniques to continuous-state reinforcement...
 164 An Experimental and Theoretical Comparison of Model Selection Methods...
 </code></pre>
+
+<p>We can also search for a certain publication using its Scopus id:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pub_info</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search_abstract</span><span class="p">(</span><span class="s">'0141607824'</span><span class="p">)</span></code></pre></figure>
+
+<p>The resulting <code class="highlighter-rouge">pub_info</code> is a dictionary containing the meta data of the specified publication. Similar to previous queries, it will by default print the info as standard output.</p>
+
+<pre><code>####Retrieved info for publication 0141607824####
+isbn :  None
+affiliation :  None
+subtype_description :  None
+volume :  3
+page_range :  993-1022
+eissn :  None
+doi :  None
+publication_name :  Journal of Machine Learning Research
+aggregation_type :  Journal
+title :  Latent Dirichlet allocation
+issn :  15324435
+citation_count :  6938
+cover_date :  2003-05-15
+scopus_id :  0141607824</code>
+</pre>
 
 
                     </div>

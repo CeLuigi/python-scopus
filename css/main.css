@@ -14,6 +14,11 @@ pre {
     font-size: 1em;
 }
 
+pre.longoutput {
+    height: 10pc;
+    overflow-y: scroll;
+}
+
 code {
     color: inherit;
 }
