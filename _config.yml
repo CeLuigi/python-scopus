@@ -3,7 +3,7 @@ title: 'PyScopus'
 subtitle: 'Python Wrapper for Scopus API'
 
 # if you wish to integrate disqus on pages set your shortname here
-disqus_shortname: ''
+disqus_shortname: 'zhiyzuo'
 
 # if you use google analytics, add your tracking id here
 google_analytics_id: ''
@@ -25,7 +25,7 @@ sections: [
 
 # Keep as an empty string if served up at the root. If served up at a specific
 # path (e.g. on GitHub pages) leave off the trailing slash, e.g. /my-project
-baseurl: ''
+baseurl: '/pyscopus'
 
 # Dates are not included in permalinks
 permalink: none
