@@ -1,6 +1,6 @@
 # Site title and subtitle. This is used in _includes/header.html
-title: 'jekyll-docs-template'
-subtitle: 'Painless documentation for your projects'
+title: 'PyScopus'
+subtitle: 'Python Wrapper for Scopus API'
 
 # if you wish to integrate disqus on pages set your shortname here
 disqus_shortname: ''
@@ -12,7 +12,7 @@ google_analytics_id: ''
 #   0 - always hide
 #   1 - always show
 #   2 - show only if posts are present
-navigation: 2
+navigation: 1
 
 # URL to source code, used in _includes/footer.html
 codeurl: 'https://github.com/bruth/jekyll-docs-template'
@@ -20,10 +20,7 @@ codeurl: 'https://github.com/bruth/jekyll-docs-template'
 # Default categories (in order) to appear in the navigation
 sections: [
     ['doc', 'Documentation'],
-    ['tut', 'Tutorial'],
-    ['ref', 'Reference'],
-    ['dev', 'Developers'],
-    ['post', 'Posts']
+    ['misc', 'Miscellaneous']
 ]
 
 # Keep as an empty string if served up at the root. If served up at a specific
@@ -34,7 +31,7 @@ baseurl: ''
 permalink: none
 
 # Syntax highlighting
-highlighter: pygments
+highlighter: rouge
 
 # Since these are pages, it doesn't really matter
 future: true
