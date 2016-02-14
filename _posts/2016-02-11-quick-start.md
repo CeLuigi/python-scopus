@@ -11,7 +11,7 @@ date: 2016-02-11 22:37:36
 First we search for a spefic author:
 
 {% highlight python %}
-from scopus import Scopus
+from pyscopus import Scopus
 scopus = Scopus(key)
 # search for Andrew Ng
 query_dict = {'affil': 'Stanford University', 'authfirst': 'Andrew', 'authlast': 'Ng'}
