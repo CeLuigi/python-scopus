@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Examples"
+title: "Quick Start"
 category: doc
 date: 2016-02-11 22:37:36
 ---
@@ -207,7 +207,7 @@ pub_info = scopus.search_abstract('0141607824')
 
 The resulting `pub_info` is a dictionary containing the meta data of the specified publication. Similar to previous queries, it will by default print the info as standard output.
 
-<pre><code>####Retrieved info for publication 0141607824####
+<pre class='longoutput'><code>####Retrieved info for publication 0141607824####
 isbn :  None
 affiliation :  None
 subtype_description :  None
@@ -219,6 +219,7 @@ publication_name :  Journal of Machine Learning Research
 aggregation_type :  Journal
 title :  Latent Dirichlet allocation
 issn :  15324435
-citation_count :  6938
+citation_count :  6968
 cover_date :  2003-05-15
-scopus_id :  0141607824</pre></code>
+scopus_id :  0141607824
+abstract:  We describe latent Dirichlet allocation (LDA), a generative probabilistic model for collections of discrete data such as text corpora. LDA is a three-level hierarchical Bayesian model, in which each item of a collection is modeled as a finite mixture over an underlying set of topics. Each topic is, in turn, modeled as an infinite mixture over an underlying set of topic probabilities. In the context of text modeling, the topic probabilities provide an explicit representation of a document. We present efficient approximate inference techniques based on variational methods and an EM algorithm for empirical Bayes parameter estimation. We report results in document modeling, text classification, and collaborative filtering, comparing to a mixture of unigrams model and the probabilistic LSI model.</pre></code>

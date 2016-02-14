@@ -15,7 +15,7 @@ pre {
 }
 
 pre.longoutput {
-    height: 10pc;
+    height: 15pc;
     overflow-y: scroll;
 }
 
