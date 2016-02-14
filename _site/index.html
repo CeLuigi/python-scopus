@@ -9,15 +9,17 @@
         <meta name="description" content="Python Wrapper for Scopus API">
 
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="/pyscopus/css/syntax.css">
-        <link rel="stylesheet" href="/pyscopus/css/main.css">
+        <link rel="stylesheet" href="/python-scopus/css/syntax.css">
+        <link rel="stylesheet" href="/python-scopus/css/main.css">
     </head>
     <body>
+
+        <a href="https://github.com/zhiyzuo/python-scopus"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
         <div class="container">
             <div class="row">
                 <div id="header" class="col-sm-12">
-                    <h4><a class="brand" href="/pyscopus/">PyScopus</a>
+                    <h4><a class="brand" href="/python-scopus/">PyScopus</a>
     <small>Python Wrapper for Scopus API</small>
 </h4>
 
@@ -29,7 +31,7 @@
                 
                     <div id="navigation" class="col-sm-2">
                         <ul class="nav nav-list">
-    <li><a href="/pyscopus/">Home</a></li>
+    <li><a href="/python-scopus/">Home</a></li>
     
         
         
@@ -38,10 +40,10 @@
             
                 <li class="nav-header">Documentation</li>
             
-            <li data-order=""><a href="/pyscopus/doc/quick-start.html">Quick Start</a></li>
+            <li data-order=""><a href="/python-scopus/doc/quick-start.html">Quick Start</a></li>
         
             
-            <li data-order=""><a href="/pyscopus/doc/scopus-api.html">API Index</a></li>
+            <li data-order=""><a href="/python-scopus/doc/scopus-api.html">API Index</a></li>
         
     
         
@@ -51,10 +53,10 @@
             
                 <li class="nav-header">Miscellaneous</li>
             
-            <li data-order=""><a href="/pyscopus/misc/contact.html">Contact</a></li>
+            <li data-order=""><a href="/python-scopus/misc/contact.html">Contact</a></li>
         
             
-            <li data-order=""><a href="/pyscopus/misc/license.html">License</a></li>
+            <li data-order=""><a href="/python-scopus/misc/license.html">License</a></li>
         
     
 <!-- List additional links. It is recommended to add a divider
@@ -67,15 +69,46 @@
                     <div id="content" class="col-sm-10">
                         <h3 id="get-acquinted-with-scopus-api">Get Acquinted with Scopus API</h3>
 
-<h5 id="please-first-refer-to-elsevier-developer-portalhttpdevelseviercomindexhtml-for-detailed-information-before-using-this-wrapper">Please first refer to <a href="http://dev.elsevier.com/index.html">Elsevier Developer Portal</a> for detailed information before using this wrapper.</h5>
+<p>Please first refer to <a href="http://dev.elsevier.com/index.html">Elsevier Developer Portal</a> for detailed information before using this wrapper.</p>
 
 <h3 id="download">Download</h3>
 
-<h5 id="this-package-has-not-published-thru-pypi-so-cannot-be-installed-using-pip">This package has not published thru PyPI so cannot be installed using <code class="highlighter-rouge">pip</code>.</h5>
+<p>PyScopus requires:</p>
 
-<p>In your command line:</p>
+<ul>
+  <li>
+    <p><a href="https://www.python.org/download/releases/2.7/">Python 2.7</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.numpy.org/">Numpy</a></p>
+  </li>
+  <li>
+    <p><a href="http://pandas.pydata.org/">Pandas</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a></p>
+  </li>
+</ul>
 
-<figure class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="gp">$ </span>git clone https://github.com/zhiyzuo/pyscopus.git</code></pre></figure>
+<h5 id="using-pip-or-easyinstall">1. Using <code class="highlighter-rouge">pip</code> or <code class="highlighter-rouge">easy_install</code></h5>
+
+<p>The easiest way of installing PyScopus is to use <code class="highlighter-rouge">pip</code>:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>pip install pyscopus</code></pre></figure>
+
+<p>or <code class="highlighter-rouge">easy_install</code></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>easy_install pyscopus</code></pre></figure>
+
+<h5 id="manual-installation">2. Manual installation</h5>
+
+<p>You can also to to the project’s <a href="https://github.com/zhiyzuo/python-scopus" target="_blank">GitHub homepage</a> or <a href="https://pypi.python.org/pypi/pyscopus" target="_blank">PyPI page</a> and download the <code class="highlighter-rouge">pyscopus-1.0.4.tar.gz</code>. Then type the following commands in order:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>tar -zxvf pyscopus-1.0.4.tar.gz 
+<span class="gp">$ </span><span class="nb">cd </span>pyscopus-1.0.4
+<span class="gp">$ </span>python setup.py install</code></pre></figure>
+
+<p>And then you are good to go.</p>
 
 
                     </div>
@@ -86,7 +119,7 @@
 
             <div class="row">
                 <div id="footer" class="col-sm-12">
-                    Documentation for <a href="https://github.com/bruth/jekyll-docs-template">PyScopus</a>
+                    Documentation for <a href="https://github.com/zhiyzuo/python-scopus">PyScopus</a>
 
                 </div>
             </div>
