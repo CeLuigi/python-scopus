@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width">
 
-        <title>PyScopus : Examples</title>
+        <title>PyScopus : Quick Start</title>
         <meta name="description" content="Python Wrapper for Scopus API">
 
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -38,10 +38,7 @@
             
                 <li class="nav-header">Documentation</li>
             
-            <li data-order=""><a href="/pyscopus/doc/examples.html">Examples</a></li>
-        
-            
-            <li data-order=""><a href="/pyscopus/doc/use-pyscopus.html">Use PyScopus</a></li>
+            <li data-order=""><a href="/pyscopus/doc/quick-start.html">Quick Start</a></li>
         
             
             <li data-order=""><a href="/pyscopus/doc/scopus-api.html">API Index</a></li>
@@ -69,7 +66,7 @@
 
                     <div id="content" class="col-sm-10">
                         <div class="page-header">
-    <h2>Examples
+    <h2>Quick Start
         
     </h2>
 </div>
@@ -270,7 +267,7 @@ First we search for a spefic author:</p>
 
 <p>The resulting <code class="highlighter-rouge">pub_info</code> is a dictionary containing the meta data of the specified publication. Similar to previous queries, it will by default print the info as standard output.</p>
 
-<pre><code>####Retrieved info for publication 0141607824####
+<pre class="longoutput"><code>####Retrieved info for publication 0141607824####
 isbn :  None
 affiliation :  None
 subtype_description :  None
@@ -282,9 +279,10 @@ publication_name :  Journal of Machine Learning Research
 aggregation_type :  Journal
 title :  Latent Dirichlet allocation
 issn :  15324435
-citation_count :  6938
+citation_count :  6968
 cover_date :  2003-05-15
-scopus_id :  0141607824</code>
+scopus_id :  0141607824
+abstract:  We describe latent Dirichlet allocation (LDA), a generative probabilistic model for collections of discrete data such as text corpora. LDA is a three-level hierarchical Bayesian model, in which each item of a collection is modeled as a finite mixture over an underlying set of topics. Each topic is, in turn, modeled as an infinite mixture over an underlying set of topic probabilities. In the context of text modeling, the topic probabilities provide an explicit representation of a document. We present efficient approximate inference techniques based on variational methods and an EM algorithm for empirical Bayes parameter estimation. We report results in document modeling, text classification, and collaborative filtering, comparing to a mixture of unigrams model and the probabilistic LSI model.</code>
 </pre>
 
 
