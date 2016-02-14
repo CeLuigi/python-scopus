@@ -9,12 +9,9 @@ title: "Get Started"
 
 ### Download
 
-##### This package has not published thru PyPI so cannot be installed using `pip`.
+#### Using `pip`
 
-In your command line:
-{%highlight sh%}
-$ git clone https://github.com/zhiyzuo/pyscopus.git
-{%endhighlight%}
+#### Download from GitHub page
 
 
 
