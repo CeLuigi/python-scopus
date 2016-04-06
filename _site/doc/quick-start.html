@@ -143,8 +143,18 @@ Affiliation: University of Iowa, Department of Management Sciences (n/a,Iowa Cit
 <p>The resulting <code class="highlighter-rouge">pub_info</code> is a dictionary containing the meta data of the specified publication. Similar to previous queries, it will by default print the info as standard output.</p>
 
 <pre class="longoutput"><code>####Retrieved info for publication Finding influential users of online health communities: a new metric based on sentiment influence. (id: 84905286162)####
-abstract:  Online health communities (OHCs) have become a major source of support for people with health problems. This research tries to improve our understanding of social influence and to identify influential users in OHCs. The outcome can facilitate OHC management, improve community sustainability, and eventually benefit OHC users. Through text mining and sentiment analysis of users' online interactions, the research revealed sentiment dynamics in threaded discussions. A novel metric--the number of influential responding replies--was proposed to directly measure a user's ability to affect the sentiment of others. Using the dataset from a popular OHC, the research demonstrated that the proposed metric is highly effective in identifying influential users. In addition, combining the metric with other traditional measures further improves the identification of influential users. Published by the BMJ Publishing Group Limited. For permission to use (where not already granted under a licence) please go to http://group.bmj.com/group/rights-licensing/permissions.</code>
-</pre>
+abstract:  Online health communities (OHCs) have become a major source of support for people with health problems. This research tries to improve our understanding of social influence and to identify influential users in OHCs. The outcome can facilitate OHC management, improve community sustainability, and eventually benefit OHC users. Through text mining and sentiment analysis of users' online interactions, the research revealed sentiment dynamics in threaded discussions. A novel metric--the number of influential responding replies--was proposed to directly measure a user's ability to affect the sentiment of others. Using the dataset from a popular OHC, the research demonstrated that the proposed metric is highly effective in identifying influential users. In addition, combining the metric with other traditional measures further improves the identification of influential users. Published by the BMJ Publishing Group Limited. For permission to use (where not already granted under a licence) please go to http://group.bmj.com/group/rights-licensing/permissions.</code></pre>
+
+<p>If you want to retrieve annual citation counts for your documents of interest, <a href="http://api.elsevier.com/documentation/AbstractCitationAPI.wadl" target="_blank">Citation Overview API</a> is the way to go. However, this API requires authorization. Please contact Elsevier developer team for support.</p>
+
+<p>You can use <code class="highlighter-rouge">retrieve_citation</code> to obtain one or more documents’ citation counts using their Scopus IDs.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pub_citations</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_citation</span><span class="p">([</span><span class="s">'84905286162'</span><span class="p">])</span></code></pre></figure>
+
+<p>The output of this function is a dictionary, with keys being Scopus IDs and values being their start year and citation counts. Specifically, Citation Overview API returns three types of citations: citation counts for each year (by default the recent three years); citation counts before the range and after the range. Standard output will also be produced as follows.</p>
+<pre><code>Scopus ID     StartYear   Previous    2014        2015        2016        Later
+84905286162    2014        0       2       3       1       0
+</code></pre>
 
 
                     </div>
