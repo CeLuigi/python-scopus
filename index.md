@@ -38,8 +38,8 @@ $ easy_install pyscopus
 You can also to to the project's <a href="https://github.com/zhiyzuo/python-scopus" target="_blank">GitHub homepage</a> or <a href="https://pypi.python.org/pypi/pyscopus" target="_blank">PyPI page</a> and download the `pyscopus-1.0.6.tar.gz`. Then type the following commands in order:
 
 {%highlight bash%}
-$ tar -zxvf pyscopus-1.0.6.tar.gz 
-$ cd pyscopus-1.0.6
+$ tar -zxvf pyscopus-1.0.7.post0.tar.gz 
+$ cd pyscopus-1.0.7.post0
 $ python setup.py install
 {%endhighlight%}
 
