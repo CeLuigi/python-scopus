@@ -78,7 +78,7 @@
 <p><br />
 First we search for a spefic author:</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pyscopus</span> <span class="kn">import</span> <span class="n">Scopus</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pyscopus.pyscopus</span> <span class="kn">import</span> <span class="n">Scopus</span>
 <span class="n">scopus</span> <span class="o">=</span> <span class="n">Scopus</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 <span class="c"># search for my advisor</span>
 <span class="n">query_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">'affil'</span><span class="p">:</span> <span class="s">'University of Iowa'</span><span class="p">,</span> <span class="s">'authfirst'</span><span class="p">:</span> <span class="s">'Kang'</span><span class="p">,</span> <span class="s">'authlast'</span><span class="p">:</span> <span class="s">'Zhao'</span><span class="p">}</span>
