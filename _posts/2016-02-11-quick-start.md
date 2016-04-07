@@ -11,7 +11,7 @@ date: 2016-02-11 22:37:36
 First we search for a spefic author:
 
 {% highlight python %}
-from pyscopus import Scopus
+from pyscopus.pyscopus import Scopus
 scopus = Scopus(key)
 # search for my advisor
 query_dict = {'affil': 'University of Iowa', 'authfirst': 'Kang', 'authlast': 'Zhao'}
