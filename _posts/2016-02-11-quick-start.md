@@ -89,10 +89,16 @@ If you want to retrieve annual citation counts for your documents of interest, <
 
 You can use `retrieve_citation` to obtain one or more documents' citation counts using their Scopus IDs. 
 {% highlight python %}
-pub_citations = scopus.retrieve_citation(['84905286162'])
+pub_citations = scopus.retrieve_citation('84905286162')
 {% endhighlight %}
 
 The output of this function is a dictionary, with keys being Scopus IDs and values being their start year and citation counts. Specifically, Citation Overview API returns three types of citations: citation counts for each year (by default the recent three years); citation counts before the range and after the range. Standard output will also be produced as follows.
 <pre><code>Scopus ID     StartYear   Previous    2014        2015        2016        Later
 84905286162    2014        0       2       3       1       0
 </code></pre>
+
+To write the results to a CSV file, you can set the path to the file as a parameter of the function (here daterange is specified to retrieve a specific year range):
+
+{% highlight python %}
+pub_citations = scopus.retrieve_citation(['84905286162', '0141607824'], daterange=(2002,2007))
+{% endhighlight %}
