@@ -149,12 +149,46 @@ abstract:  Online health communities (OHCs) have become a major source of suppor
 
 <p>You can use <code class="highlighter-rouge">retrieve_citation</code> to obtain one or more documents’ citation counts using their Scopus IDs.</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pub_citations</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_citation</span><span class="p">([</span><span class="s">'84905286162'</span><span class="p">])</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pub_citations</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_citation</span><span class="p">(</span><span class="s">'84905286162'</span><span class="p">)</span></code></pre></figure>
 
 <p>The output of this function is a dictionary, with keys being Scopus IDs and values being their start year and citation counts. Specifically, Citation Overview API returns three types of citations: citation counts for each year (by default the recent three years); citation counts before the range and after the range. Standard output will also be produced as follows.</p>
 <pre><code>Scopus ID     StartYear   Previous    2014        2015        2016        Later
 84905286162    2014        0       2       3       1       0
 </code></pre>
+
+<p>To write the results to a CSV file, you can set the path to the file as a parameter of the function (here daterange is specified to retrieve a specific year range):</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pub_citations</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_citation</span><span class="p">([</span><span class="s">'84905286162'</span><span class="p">,</span> <span class="s">'0141607824'</span><span class="p">],</span>\
+     <span class="n">daterange</span><span class="o">=</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span> <span class="n">write2file</span><span class="o">=</span><span class="s">'citations.csv'</span><span class="p">)</span></code></pre></figure>
+
+<p>Standard output and <code class="highlighter-rouge">citations.csv</code> are displayed as follows.</p>
+
+<pre><code>Scopus ID     StartYear   Previous    2014        2015        Later
+84905286162  2014        0       2       3       1
+0141607824   2003        4517        1400        1327        141
+</code></pre>
+
+<table class="table table-bordered table-hover table-condensed">
+<tbody><tr><td align="center">Scopus ID</td>
+<td align="center">previous</td>
+<td align="center">2014</td>
+<td align="center">2015</td>
+<td align="center">later</td>
+</tr>
+<tr><td align="center">84905286162</td>
+<td align="center">0</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">1</td>
+</tr>
+<tr><td align="center">0141607824</td>
+<td align="center">4517</td>
+<td align="center">1400</td>
+<td align="center">1327</td>
+<td align="center">141</td>
+</tr>
+</tbody></table>
+
 
 
                     </div>

@@ -100,5 +100,35 @@ The output of this function is a dictionary, with keys being Scopus IDs and valu
 To write the results to a CSV file, you can set the path to the file as a parameter of the function (here daterange is specified to retrieve a specific year range):
 
 {% highlight python %}
-pub_citations = scopus.retrieve_citation(['84905286162', '0141607824'], daterange=(2002,2007))
+pub_citations = scopus.retrieve_citation(['84905286162', '0141607824'],\
+     daterange=(2014,2015), write2file='citations.csv')
 {% endhighlight %}
+
+Standard output and `citations.csv` are displayed as follows.
+
+<pre><code>Scopus ID     StartYear   Previous    2014        2015        Later
+84905286162  2014        0       2       3       1
+0141607824   2003        4517        1400        1327        141
+</code></pre>
+
+<table class="table table-bordered table-hover table-condensed">
+<tbody><tr><td align="center">Scopus ID</td>
+<td align="center">previous</td>
+<td align="center">2014</td>
+<td align="center">2015</td>
+<td align="center">later</td>
+</tr>
+<tr><td align="center">84905286162</td>
+<td align="center">0</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">1</td>
+</tr>
+<tr><td align="center">0141607824</td>
+<td align="center">4517</td>
+<td align="center">1400</td>
+<td align="center">1327</td>
+<td align="center">141</td>
+</tr>
+</tbody></table>
+
