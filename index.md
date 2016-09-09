@@ -7,9 +7,9 @@ title: "Get Started"
 
 Please consider citating one or both of our papers below when you use PyScopus:
 
-[1] Zhiya Zuo, Xi Wang, David Eichmann, and Kang Zhao. 2016. Research Collaborations in Multidisciplinary Institutions: a Case Study of iSchools. *In Proceedings of the 25th International Conference Companion on World Wide Web* (WWW '16 Companion). International World Wide Web Conferences Steering Committee, Republic and Canton of Geneva, Switzerland, 443-448. DOI=http://dx.doi.org/10.1145/2872518.2890522
+[1] Zhiya Zuo, Kang Zhao, andd David Eichmann. The State and Evolution of U.S. iSchools -- from Talent Acquisitions to Research Outcome. *Journal of the Association for Information Science and Technology* (JASIST). (*Forthcoming*)
 
-[2] Zhiya Zuo, Kang Zhao, andd David Eichmann. The State and Evolution of U.S. iSchools -- from Talent Acquisitions to Research Outcome. *Journal of the Association for Information Science and Technology* (JASIST). Final Review
+[2] Zhiya Zuo, Xi Wang, David Eichmann, and Kang Zhao. 2016. Research Collaborations in Multidisciplinary Institutions: a Case Study of iSchools. *In Proceedings of the 25th International Conference Companion on World Wide Web* (WWW '16 Companion). International World Wide Web Conferences Steering Committee, Republic and Canton of Geneva, Switzerland, 443-448. DOI=http://dx.doi.org/10.1145/2872518.2890522
 
 ### Get Acquinted with Scopus API
 
