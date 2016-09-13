@@ -158,6 +158,8 @@ abstract:  Online health communities (OHCs) have become a major source of suppor
 
 <p>To write the results to a CSV file, you can set the path to the file as a parameter of the function (here daterange is specified to retrieve a specific year range):</p>
 
+<p>(/* Please note that if you are searching the citation record for only one publication, you still need to put it in a list or numpy array.*/)</p>
+
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pub_citations</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_citation</span><span class="p">([</span><span class="s">'84905286162'</span><span class="p">,</span> <span class="s">'0141607824'</span><span class="p">],</span>\
      <span class="n">daterange</span><span class="o">=</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span> <span class="n">write2file</span><span class="o">=</span><span class="s">'citations.csv'</span><span class="p">)</span></code></pre></figure>
 

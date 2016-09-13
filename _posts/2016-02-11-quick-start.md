@@ -99,6 +99,8 @@ The output of this function is a dictionary, with keys being Scopus IDs and valu
 
 To write the results to a CSV file, you can set the path to the file as a parameter of the function (here daterange is specified to retrieve a specific year range):
 
+(/* Please note that if you are searching the citation record for only one publication, you still need to put it in a list or numpy array.*/)
+
 {% highlight python %}
 pub_citations = scopus.retrieve_citation(['84905286162', '0141607824'],\
      daterange=(2014,2015), write2file='citations.csv')
