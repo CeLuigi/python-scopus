@@ -32,22 +32,22 @@ PyScopus requires:
 The easiest way of installing PyScopus is to use `pip`:
 
 {%highlight bash%}
-$ pip install pyscopus
+$ pip install python-scopus
 {%endhighlight%}
 
  or `easy_install`
 
 {%highlight bash%}
-$ easy_install pyscopus
+$ easy_install python-scopus
 {%endhighlight%}
 
 ##### 2. Manual installation
 
-You can also to to the project's <a href="https://github.com/zhiyzuo/python-scopus" target="_blank">GitHub homepage</a> or <a href="https://pypi.python.org/pypi/python-scopus/" target="_blank">PyPI page</a> and download the `python-scopus-0.7.0.tar.gz`. Then type the following commands in order:
+You can also to to the project's <a href="https://github.com/zhiyzuo/python-scopus" target="_blank">GitHub homepage</a> or <a href="https://pypi.python.org/pypi/python-scopus/" target="_blank">PyPI page</a> and download the `python-scopus-0.7.1.tar.gz`. Then type the following commands in order:
 
 {%highlight bash%}
-$ tar -zxvf python-scopus-0.7.0.tar.gz 
-$ cd python-scopus-0.7.0
+$ tar -zxvf python-scopus-0.7.1.tar.gz 
+$ cd python-scopus-0.7.1
 $ python setup.py install
 {%endhighlight%}
 
