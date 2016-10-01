@@ -1,4 +1,6 @@
 *.swp
 *.pyc
 pyscopus.egg-info/
+python_scopus.egg-info/
 dist/
+build/
