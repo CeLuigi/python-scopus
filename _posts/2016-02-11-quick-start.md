@@ -11,7 +11,7 @@ date: 2016-02-11 22:37:36
 First we search for a spefic author:
 
 {% highlight python %}
-from pyscopus.pyscopus import Scopus
+from pyscopus.scopus import Scopus
 scopus = Scopus(key)
 # search for my advisor
 query_dict = {'affil': 'University of Iowa', 'authfirst': 'Kang', 'authlast': 'Zhao'}
@@ -136,7 +136,7 @@ Standard output and `citations.csv` are displayed as follows.
 
 Sometimes you may want to search for articles within a specific venue (journal, conference, book, or report) -- the function `search_venue` comes to you! For example, we are interested in finding some papers in <a href='http://www.jmlr.org/' target='_blank'>Journal of Machine Learning Research</a> from 2013 to 2015, we can run the following code:
 {% highlight python %}
-mlpapers = s.search_venue('journal of machine learning research', year_range=(2013,2015))
+mlpapers = scopus.search_venue('journal of machine learning research', year_range=(2013,2015))
 {% endhighlight %}
 
 <pre><code>A total number of  925  records for the venue journal of machine learning research from 2013 to 2015.

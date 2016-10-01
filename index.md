@@ -32,24 +32,24 @@ PyScopus requires:
 The easiest way of installing PyScopus is to use `pip`:
 
 {%highlight bash%}
-$ pip install python-scopus
+$ pip install pyscopus
 {%endhighlight%}
 
  or `easy_install`
 
 {%highlight bash%}
-$ easy_install python-scopus
+$ easy_install pyscopus
 {%endhighlight%}
 
 ##### 2. Manual installation
 
-You can also to to the project's <a href="https://github.com/zhiyzuo/python-scopus" target="_blank">GitHub homepage</a> or <a href="https://pypi.python.org/pypi/python-scopus/" target="_blank">PyPI page</a> and download the `python-scopus-0.7.1.tar.gz`. Then type the following commands in order:
+You can also clone and install the project from its <a href="https://github.com/zhiyzuo/python-scopus" target="_blank">GitHub homepage</a> like this:
 
 {%highlight bash%}
-$ tar -zxvf python-scopus-0.7.1.tar.gz 
-$ cd python-scopus-0.7.1
+$ git clone https://github.com/zhiyzuo/python-scopus.git
+$ cd python-scopus/
 $ python setup.py install
 {%endhighlight%}
 
-And then you are good to go.
+And then please start to enjoy the easy scraping of data from Scopus.
 

@@ -1,9 +1,0 @@
-README
-setup.py
-pyscopus/__init__.py
-pyscopus/pyscopus.py
-pyscopus/utils.py
-python_scopus.egg-info/PKG-INFO
-python_scopus.egg-info/SOURCES.txt
-python_scopus.egg-info/dependency_links.txt
-python_scopus.egg-info/top_level.txt

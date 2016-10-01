@@ -78,7 +78,7 @@
 <p><br />
 First we search for a spefic author:</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pyscopus.pyscopus</span> <span class="kn">import</span> <span class="n">Scopus</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pyscopus.scopus</span> <span class="kn">import</span> <span class="n">Scopus</span>
 <span class="n">scopus</span> <span class="o">=</span> <span class="n">Scopus</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 <span class="c"># search for my advisor</span>
 <span class="n">query_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">'affil'</span><span class="p">:</span> <span class="s">'University of Iowa'</span><span class="p">,</span> <span class="s">'authfirst'</span><span class="p">:</span> <span class="s">'Kang'</span><span class="p">,</span> <span class="s">'authlast'</span><span class="p">:</span> <span class="s">'Zhao'</span><span class="p">}</span>
@@ -193,7 +193,7 @@ abstract:  Online health communities (OHCs) have become a major source of suppor
 
 <p>Sometimes you may want to search for articles within a specific venue (journal, conference, book, or report) – the function <code class="highlighter-rouge">search_venue</code> comes to you! For example, we are interested in finding some papers in <a href="http://www.jmlr.org/" target="_blank">Journal of Machine Learning Research</a> from 2013 to 2015, we can run the following code:</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">mlpapers</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">search_venue</span><span class="p">(</span><span class="s">'journal of machine learning research'</span><span class="p">,</span> <span class="n">year_range</span><span class="o">=</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span><span class="mi">2015</span><span class="p">))</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">mlpapers</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search_venue</span><span class="p">(</span><span class="s">'journal of machine learning research'</span><span class="p">,</span> <span class="n">year_range</span><span class="o">=</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span><span class="mi">2015</span><span class="p">))</span></code></pre></figure>
 
 <pre><code>A total number of  925  records for the venue journal of machine learning research from 2013 to 2015.
 Showing 10 of them as requested ordered by relevency.
