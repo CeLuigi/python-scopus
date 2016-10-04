@@ -37,7 +37,7 @@ kang_info = scopus.retrieve_author('36635367700')
 Affiliation: University of Iowa, Department of Management Sciences (n/a,Iowa City,IA,n/a,United States)
 </code></pre>
 
-`kang_info` is a dictionary, containing first name, last name, current/previous affiliations, document count, citation count, cited-by count, journal/conference history, and subject areas.
+`kang_info` is a dictionary, containing first name, last name, current/previous affiliations, document count, citation count, cited-by count, journal/conference history, and subject areas. By default, `PyScopus` will save the results from `retrieve_author()` to a folder named `author_xmls/` in the current working directory. You can set `save_xml=False` when calling this function to disable this feature.
 <pre class='longoutput'><code>{'current-affiliation': [{'address': 'n/a,Iowa City,IA,n/a,United States', 'id': '104227060', 'name': 'University of Iowa, Department of Management Sciences'}], 'citation-count': 73, 'last-name': 'Zhao', 'subject-areas': ['Applied Mathematics', 'Information Systems', 'Artificial Intelligence', 'Electrical and Electronic Engineering', 'Modeling and Simulation', 'Medicine (all)', 'Software', 'Computer Science (all)', 'Oncology', 'Control and Systems Engineering', 'Education', 'Human-Computer Interaction', 'Strategy and Management', 'Hardware and Architecture', 'Cancer Research', 'Computer Graphics and Computer-Aided Design', 'Computer Science Applications', 'Safety, Risk, Reliability and Quality', 'Library and Information Sciences', 'Computer Networks and Communications', 'Statistics, Probability and Uncertainty', 'Theoretical Computer Science'], 'affiliation-history': [{'address': 'n/a,Iowa City,IA,n/a,United States', 'id': '104227060', 'name': 'University of Iowa, Department of Management Sciences'}, {'address': 'n/a,Iowa City,IA,n/a,United States', 'id': '104227074', 'name': 'University of Iowa, Tippie College of Business'}, {'address': 'n/a,Iowa City,IA,n/a,United States', 'id': '60024324', 'name': 'University of Iowa'}, {'address': 'n/a,State College,PA,n/a,United States', 'id': '105050101', 'name': 'Pennsylvania State University, College of Information Sciences and Technology'}, {'address': 'n/a,State College,PA,n/a,United States', 'id': '60001439', 'name': 'Pennsylvania State University'}], 'cited-by-count': 59, 'first-name': 'Kang', 'journal-history': ['Proceedings - 21st Workshop on Information Technologies and Systems, WITS 2011', 'Proceedings - Pacific Asia Conference on Information Systems, PACIS 2014', 'Journal of the National Cancer Institute. Monographs', 'Proceedings - The 8th IEEE International Conference on Advanced Learning Technologies, ICALT 2008', 'ISCRAM 2010 - 7th International Conference on Information Systems for Crisis Response and Management: Defining Crisis Management 3.0, Proceedings', 'Information Systems and e-Business Management', 'Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)', '16th Americas Conference on Information Systems 2010, AMCIS 2010', 'Proceedings - 2011 IEEE International Conference on Privacy, Security, Risk and Trust and IEEE International Conference on Social Computing, PASSAT/SocialCom 2011', 'IEEE Transactions on Engineering Management', 'Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)', 'World Wide Web', '19th Workshop on Information Technologies and Systems, WITS 2009', 'IEEE Intelligent Systems', 'Proceedings of ISCRAM 2008 - 5th International Conference on Information Systems for Crisis Response and Management', 'Proceedings - SocialCom 2010: 2nd IEEE International Conference on Social Computing, PASSAT 2010: 2nd IEEE International Conference on Privacy, Security, Risk and Trust', 'Journal of the National Cancer Institute - Monographs', 'Simulation', 'IEEE Systems Journal', 'Proceedings of 20th Annual Workshop on Information Technologies and Systems', 'International Conference on Information Systems (ICIS 2013): Reshaping Society Through Information Systems Design', 'Journal of the American Medical Informatics Association : JAMIA'], 'document-count': 24}
 </code></pre>
 
@@ -75,17 +75,37 @@ kang_pubs = scopus.search_author_publication('36635367700')
 23 Building global bridges: Coordination bodies for improved information...
 </code></pre>
 
-We can also search for a certain publication using its Scopus id:
+We can also retrieve the abstract of a certain publication using its Scopus id:
 {% highlight python %}
-pub_info = scopus.search_abstract('84905286162')
+pub_info = scopus.retrieve_abstract('84905286162')
 {% endhighlight %}
 
-The resulting `pub_info` is a dictionary containing the meta data of the specified publication. Similar to previous queries, it will by default print the info as standard output.
+The resulting `pub_info` is a dictionary containing the meta data of the specified publication. Similar to previous queries, it will by default print the info as standard output. Similar to `retrieve_author()`, this function will also export the corresponding XML file to `abstract_xmls/` in the current directory. You can set `save_xml` to `False` to prevent it from outputing.
 
 <pre class='longoutput'><code>####Retrieved info for publication Finding influential users of online health communities: a new metric based on sentiment influence. (id: 84905286162)####
 abstract:  Online health communities (OHCs) have become a major source of support for people with health problems. This research tries to improve our understanding of social influence and to identify influential users in OHCs. The outcome can facilitate OHC management, improve community sustainability, and eventually benefit OHC users. Through text mining and sentiment analysis of users' online interactions, the research revealed sentiment dynamics in threaded discussions. A novel metric--the number of influential responding replies--was proposed to directly measure a user's ability to affect the sentiment of others. Using the dataset from a popular OHC, the research demonstrated that the proposed metric is highly effective in identifying influential users. In addition, combining the metric with other traditional measures further improves the identification of influential users. Published by the BMJ Publishing Group Limited. For permission to use (where not already granted under a licence) please go to http://group.bmj.com/group/rights-licensing/permissions.</code></pre>
 
-If you want to retrieve annual citation counts for your documents of interest, <a href="http://api.elsevier.com/documentation/AbstractCitationAPI.wadl" target="_blank">Citation Overview API</a> is the way to go. However, this API requires authorization. Please contact Elsevier developer team for support.
+Sometimes you may want to search for articles within a specific venue (journal, conference, book, or report) -- the function `search_venue` comes to you! For example, we are interested in finding some papers in <a href='http://www.jmlr.org/' target='_blank'>Journal of Machine Learning Research</a> from 2013 to 2015, we can run the following code:
+{% highlight python %}
+mlpapers = scopus.search_venue('journal of machine learning research', year_range=(2013,2015))
+{% endhighlight %}
+
+<pre><code>A total number of  925  records for the venue journal of machine learning research from 2013 to 2015.
+Showing 10 of them as requested ordered by relevency.
+0) A topic modeling approach to ranking...
+1) Efficient sparse clustering of high-dimensional non-spherical Gaussian...
+2) Similarity-based clustering by left-stochastic matrix factorization...
+3) Estimating the accuracies of multiple classifiers without labeled data...
+4) Sparse activity and sparse connectivity in supervised learning...
+5) Random Bayesian networks with bounded indegree...
+6) Random projections for support vector machines...
+7) A direct estimation of high dimensional stationary vector autoregressions...
+8) Parallel MCMC with generalized elliptical slice sampling...
+9) Online passive-aggressive algorithms for non-negative matrix factorization...
+</code></pre>
+
+
+If you want to retrieve annual citation counts for your documents of interest, <a href="http://api.elsevier.com/documentation/AbstractCitationAPI.wadl" target="_blank">Citation Overview API</a> is the way to go. However, this API requires authorization. __Please contact Elsevier developer team for support before trying this out__.
 
 You can use `retrieve_citation` to obtain one or more documents' citation counts using their Scopus IDs. 
 {% highlight python %}
@@ -99,7 +119,7 @@ The output of this function is a dictionary, with keys being Scopus IDs and valu
 
 To write the results to a CSV file, you can set the path to the file as a parameter of the function (here daterange is specified to retrieve a specific year range):
 
-(/* Please note that if you are searching the citation record for only one publication, you still need to put it in a list or numpy array.*/)
+(*Please note that if you are searching the citation record for only one publication, you still need to put it in a list or numpy array.*)
 
 {% highlight python %}
 pub_citations = scopus.retrieve_citation(['84905286162', '0141607824'],\
@@ -133,23 +153,3 @@ Standard output and `citations.csv` are displayed as follows.
 <td align="center">141</td>
 </tr>
 </tbody></table>
-
-Sometimes you may want to search for articles within a specific venue (journal, conference, book, or report) -- the function `search_venue` comes to you! For example, we are interested in finding some papers in <a href='http://www.jmlr.org/' target='_blank'>Journal of Machine Learning Research</a> from 2013 to 2015, we can run the following code:
-{% highlight python %}
-mlpapers = scopus.search_venue('journal of machine learning research', year_range=(2013,2015))
-{% endhighlight %}
-
-<pre><code>A total number of  925  records for the venue journal of machine learning research from 2013 to 2015.
-Showing 10 of them as requested ordered by relevency.
-0) A topic modeling approach to ranking...
-1) Efficient sparse clustering of high-dimensional non-spherical Gaussian...
-2) Similarity-based clustering by left-stochastic matrix factorization...
-3) Estimating the accuracies of multiple classifiers without labeled data...
-4) Sparse activity and sparse connectivity in supervised learning...
-5) Random Bayesian networks with bounded indegree...
-6) Random projections for support vector machines...
-7) A direct estimation of high dimensional stationary vector autoregressions...
-8) Parallel MCMC with generalized elliptical slice sampling...
-9) Online passive-aggressive algorithms for non-negative matrix factorization...
-</code></pre>
-
