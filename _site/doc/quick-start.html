@@ -100,7 +100,7 @@ First we search for a spefic author:</p>
 Affiliation: University of Iowa, Department of Management Sciences (n/a,Iowa City,IA,n/a,United States)
 </code></pre>
 
-<p><code class="highlighter-rouge">kang_info</code> is a dictionary, containing first name, last name, current/previous affiliations, document count, citation count, cited-by count, journal/conference history, and subject areas.</p>
+<p><code class="highlighter-rouge">kang_info</code> is a dictionary, containing first name, last name, current/previous affiliations, document count, citation count, cited-by count, journal/conference history, and subject areas. By default, <code class="highlighter-rouge">PyScopus</code> will save the results from <code class="highlighter-rouge">retrieve_author()</code> to a folder named <code class="highlighter-rouge">author_xmls/</code> in the current working directory. You can set <code class="highlighter-rouge">save_xml=False</code> when calling this function to disable this feature.</p>
 <pre class="longoutput"><code>{'current-affiliation': [{'address': 'n/a,Iowa City,IA,n/a,United States', 'id': '104227060', 'name': 'University of Iowa, Department of Management Sciences'}], 'citation-count': 73, 'last-name': 'Zhao', 'subject-areas': ['Applied Mathematics', 'Information Systems', 'Artificial Intelligence', 'Electrical and Electronic Engineering', 'Modeling and Simulation', 'Medicine (all)', 'Software', 'Computer Science (all)', 'Oncology', 'Control and Systems Engineering', 'Education', 'Human-Computer Interaction', 'Strategy and Management', 'Hardware and Architecture', 'Cancer Research', 'Computer Graphics and Computer-Aided Design', 'Computer Science Applications', 'Safety, Risk, Reliability and Quality', 'Library and Information Sciences', 'Computer Networks and Communications', 'Statistics, Probability and Uncertainty', 'Theoretical Computer Science'], 'affiliation-history': [{'address': 'n/a,Iowa City,IA,n/a,United States', 'id': '104227060', 'name': 'University of Iowa, Department of Management Sciences'}, {'address': 'n/a,Iowa City,IA,n/a,United States', 'id': '104227074', 'name': 'University of Iowa, Tippie College of Business'}, {'address': 'n/a,Iowa City,IA,n/a,United States', 'id': '60024324', 'name': 'University of Iowa'}, {'address': 'n/a,State College,PA,n/a,United States', 'id': '105050101', 'name': 'Pennsylvania State University, College of Information Sciences and Technology'}, {'address': 'n/a,State College,PA,n/a,United States', 'id': '60001439', 'name': 'Pennsylvania State University'}], 'cited-by-count': 59, 'first-name': 'Kang', 'journal-history': ['Proceedings - 21st Workshop on Information Technologies and Systems, WITS 2011', 'Proceedings - Pacific Asia Conference on Information Systems, PACIS 2014', 'Journal of the National Cancer Institute. Monographs', 'Proceedings - The 8th IEEE International Conference on Advanced Learning Technologies, ICALT 2008', 'ISCRAM 2010 - 7th International Conference on Information Systems for Crisis Response and Management: Defining Crisis Management 3.0, Proceedings', 'Information Systems and e-Business Management', 'Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)', '16th Americas Conference on Information Systems 2010, AMCIS 2010', 'Proceedings - 2011 IEEE International Conference on Privacy, Security, Risk and Trust and IEEE International Conference on Social Computing, PASSAT/SocialCom 2011', 'IEEE Transactions on Engineering Management', 'Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)', 'World Wide Web', '19th Workshop on Information Technologies and Systems, WITS 2009', 'IEEE Intelligent Systems', 'Proceedings of ISCRAM 2008 - 5th International Conference on Information Systems for Crisis Response and Management', 'Proceedings - SocialCom 2010: 2nd IEEE International Conference on Social Computing, PASSAT 2010: 2nd IEEE International Conference on Privacy, Security, Risk and Trust', 'Journal of the National Cancer Institute - Monographs', 'Simulation', 'IEEE Systems Journal', 'Proceedings of 20th Annual Workshop on Information Technologies and Systems', 'International Conference on Information Systems (ICIS 2013): Reshaping Society Through Information Systems Design', 'Journal of the American Medical Informatics Association : JAMIA'], 'document-count': 24}
 </code></pre>
 
@@ -136,16 +136,34 @@ Affiliation: University of Iowa, Department of Management Sciences (n/a,Iowa Cit
 23 Building global bridges: Coordination bodies for improved information...
 </code></pre>
 
-<p>We can also search for a certain publication using its Scopus id:</p>
+<p>We can also retrieve the abstract of a certain publication using its Scopus id:</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pub_info</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search_abstract</span><span class="p">(</span><span class="s">'84905286162'</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pub_info</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_abstract</span><span class="p">(</span><span class="s">'84905286162'</span><span class="p">)</span></code></pre></figure>
 
-<p>The resulting <code class="highlighter-rouge">pub_info</code> is a dictionary containing the meta data of the specified publication. Similar to previous queries, it will by default print the info as standard output.</p>
+<p>The resulting <code class="highlighter-rouge">pub_info</code> is a dictionary containing the meta data of the specified publication. Similar to previous queries, it will by default print the info as standard output. Similar to <code class="highlighter-rouge">retrieve_author()</code>, this function will also export the corresponding XML file to <code class="highlighter-rouge">abstract_xmls/</code> in the current directory. You can set <code class="highlighter-rouge">save_xml</code> to <code class="highlighter-rouge">False</code> to prevent it from outputing.</p>
 
 <pre class="longoutput"><code>####Retrieved info for publication Finding influential users of online health communities: a new metric based on sentiment influence. (id: 84905286162)####
 abstract:  Online health communities (OHCs) have become a major source of support for people with health problems. This research tries to improve our understanding of social influence and to identify influential users in OHCs. The outcome can facilitate OHC management, improve community sustainability, and eventually benefit OHC users. Through text mining and sentiment analysis of users' online interactions, the research revealed sentiment dynamics in threaded discussions. A novel metric--the number of influential responding replies--was proposed to directly measure a user's ability to affect the sentiment of others. Using the dataset from a popular OHC, the research demonstrated that the proposed metric is highly effective in identifying influential users. In addition, combining the metric with other traditional measures further improves the identification of influential users. Published by the BMJ Publishing Group Limited. For permission to use (where not already granted under a licence) please go to http://group.bmj.com/group/rights-licensing/permissions.</code></pre>
 
-<p>If you want to retrieve annual citation counts for your documents of interest, <a href="http://api.elsevier.com/documentation/AbstractCitationAPI.wadl" target="_blank">Citation Overview API</a> is the way to go. However, this API requires authorization. Please contact Elsevier developer team for support.</p>
+<p>Sometimes you may want to search for articles within a specific venue (journal, conference, book, or report) – the function <code class="highlighter-rouge">search_venue</code> comes to you! For example, we are interested in finding some papers in <a href="http://www.jmlr.org/" target="_blank">Journal of Machine Learning Research</a> from 2013 to 2015, we can run the following code:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">mlpapers</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search_venue</span><span class="p">(</span><span class="s">'journal of machine learning research'</span><span class="p">,</span> <span class="n">year_range</span><span class="o">=</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span><span class="mi">2015</span><span class="p">))</span></code></pre></figure>
+
+<pre><code>A total number of  925  records for the venue journal of machine learning research from 2013 to 2015.
+Showing 10 of them as requested ordered by relevency.
+0) A topic modeling approach to ranking...
+1) Efficient sparse clustering of high-dimensional non-spherical Gaussian...
+2) Similarity-based clustering by left-stochastic matrix factorization...
+3) Estimating the accuracies of multiple classifiers without labeled data...
+4) Sparse activity and sparse connectivity in supervised learning...
+5) Random Bayesian networks with bounded indegree...
+6) Random projections for support vector machines...
+7) A direct estimation of high dimensional stationary vector autoregressions...
+8) Parallel MCMC with generalized elliptical slice sampling...
+9) Online passive-aggressive algorithms for non-negative matrix factorization...
+</code></pre>
+
+<p>If you want to retrieve annual citation counts for your documents of interest, <a href="http://api.elsevier.com/documentation/AbstractCitationAPI.wadl" target="_blank">Citation Overview API</a> is the way to go. However, this API requires authorization. <strong>Please contact Elsevier developer team for support before trying this out</strong>.</p>
 
 <p>You can use <code class="highlighter-rouge">retrieve_citation</code> to obtain one or more documents’ citation counts using their Scopus IDs.</p>
 
@@ -158,7 +176,7 @@ abstract:  Online health communities (OHCs) have become a major source of suppor
 
 <p>To write the results to a CSV file, you can set the path to the file as a parameter of the function (here daterange is specified to retrieve a specific year range):</p>
 
-<p>(/* Please note that if you are searching the citation record for only one publication, you still need to put it in a list or numpy array.*/)</p>
+<p>(<em>Please note that if you are searching the citation record for only one publication, you still need to put it in a list or numpy array.</em>)</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pub_citations</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_citation</span><span class="p">([</span><span class="s">'84905286162'</span><span class="p">,</span> <span class="s">'0141607824'</span><span class="p">],</span>\
      <span class="n">daterange</span><span class="o">=</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span><span class="mi">2015</span><span class="p">),</span> <span class="n">write2file</span><span class="o">=</span><span class="s">'citations.csv'</span><span class="p">)</span></code></pre></figure>
@@ -190,25 +208,6 @@ abstract:  Online health communities (OHCs) have become a major source of suppor
 <td align="center">141</td>
 </tr>
 </tbody></table>
-
-<p>Sometimes you may want to search for articles within a specific venue (journal, conference, book, or report) – the function <code class="highlighter-rouge">search_venue</code> comes to you! For example, we are interested in finding some papers in <a href="http://www.jmlr.org/" target="_blank">Journal of Machine Learning Research</a> from 2013 to 2015, we can run the following code:</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">mlpapers</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search_venue</span><span class="p">(</span><span class="s">'journal of machine learning research'</span><span class="p">,</span> <span class="n">year_range</span><span class="o">=</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span><span class="mi">2015</span><span class="p">))</span></code></pre></figure>
-
-<pre><code>A total number of  925  records for the venue journal of machine learning research from 2013 to 2015.
-Showing 10 of them as requested ordered by relevency.
-0) A topic modeling approach to ranking...
-1) Efficient sparse clustering of high-dimensional non-spherical Gaussian...
-2) Similarity-based clustering by left-stochastic matrix factorization...
-3) Estimating the accuracies of multiple classifiers without labeled data...
-4) Sparse activity and sparse connectivity in supervised learning...
-5) Random Bayesian networks with bounded indegree...
-6) Random projections for support vector machines...
-7) A direct estimation of high dimensional stationary vector autoregressions...
-8) Parallel MCMC with generalized elliptical slice sampling...
-9) Online passive-aggressive algorithms for non-negative matrix factorization...
-</code></pre>
-
 
 
                     </div>
