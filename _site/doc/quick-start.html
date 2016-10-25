@@ -167,7 +167,7 @@ Showing 10 of them as requested ordered by relevency.
 
 <p>You can use <code class="highlighter-rouge">retrieve_citation</code> to obtain one or more documents’ citation counts using their Scopus IDs.</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pub_citations</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_citation</span><span class="p">(</span><span class="s">'84905286162'</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pub_citations</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_citation</span><span class="p">([</span><span class="s">'84905286162'</span><span class="p">])</span></code></pre></figure>
 
 <p>The output of this function is a dictionary, with keys being Scopus IDs and values being their start year and citation counts. Specifically, Citation Overview API returns three types of citations: citation counts for each year (by default the recent three years); citation counts before the range and after the range. Standard output will also be produced as follows.</p>
 <pre><code>Scopus ID     StartYear   Previous    2014        2015        2016        Later
