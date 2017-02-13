@@ -5,14 +5,158 @@ category: doc
 date: 2016-02-11 22:37:36
 ---
 
-#### The following are some examples. (Note that API keys are hidden. Please get your own API keys.)
+### _Note that API keys are hidden. Please get your own API keys._
 
-<br>
-First we search for a spefic author:
-
+#### * *A quick example on general search*
 {% highlight python %}
 from pyscopus.scopus import Scopus
 scopus = Scopus(key)
+# search for documents
+docs = scopus.search("KEY(interdisciplinary collaboration)", count=20)
+{% endhighlight %}
+
+By default, the following output will be shown:
+<pre class="longoutput"><code>A total number of  1230  records for the query.
+Showing 20 of them.
+                                          affiliation       aggregation_type  \
+0   University of London, Institute of Education, ...                Journal   
+1            Simon Fraser University, Burnaby, Canada                Journal   
+2         Taipei City Hospital Taiwan, Taipei, Taiwan                Journal   
+3   Virginia Polytechnic Institute and State Unive...                Journal   
+4            University of Belgrade, Belgrade, Serbia            Book Series   
+5                University of Nordland, Bodo, Norway                Journal   
+6      Indiana University, Bloomington, United States                Journal   
+7   Marquette University School of Dentistry, Milw...                Journal   
+8                  Sichuan University, Chengdu, China                Journal   
+9           Lulea tekniska Universitet, Lulea, Sweden                Journal   
+10  Universitatsklinikum Leipzig und Medizinische ...                Journal   
+11  Georgia Southern University, Statesboro, Unite...                Journal   
+12  University of South Carolina, Columbia, United...                Journal   
+13        Chiang Mai University, Chiang Mai, Thailand                Journal   
+14      University of Melbourne, Parkville, Australia                Journal   
+15   Valparaiso University, Valparaiso, United States  Conference Proceeding   
+16     Karadeniz Teknik Universitesi, Trabzon, Turkey  Conference Proceeding   
+17  Fraunhofer Research Institution for Mechatroni...  Conference Proceeding   
+18  Indiana University-Purdue University Indianapo...                Journal   
+19                 Universitetet i Oslo, Oslo, Norway                Journal   
+
+    citation_count  cover_date                            doi     eissn  \
+0                0  2017-02-01              10.1002/asi.23658  23301643   
+1                0  2017-01-20  10.1080/14626268.2016.1250013  17443806   
+2                0  2017-01-02  10.1080/13561820.2016.1248816  14699567   
+3                0  2017-01-01     10.2495/DNE-V12-N2-185-193  17557445   
+4                0  2017-01-01   10.1007/978-3-319-49058-8_59      None   
+5                0  2017-01-01       10.1177/0020872814559561  14617234   
+6                0  2017-01-01      10.1007/s11528-016-0124-6      None   
+7                0  2017-01-01     10.1016/j.msec.2016.08.055      None   
+8                0  2017-01-01       10.1177/0885328216681893  15308022   
+9                0  2017-01-01   10.1016/j.gexplo.2016.09.014      None   
+10               0  2017-01-01      10.1007/s00101-016-0247-3  1432055X   
+11               0  2016-12-01       10.1177/1049909115613315      None   
+12               1  2016-12-01             10.1002/ajcp.12105      None   
+13               0  2016-12-01              10.1111/ger.12208  17412358   
+14               1  2016-12-01             10.1037/met0000091      None   
+15               0  2016-11-28       10.1109/FIE.2016.7757485      None   
+16               0  2016-11-28     10.1109/ITHET.2016.7760730      None   
+17               0  2016-11-22    10.1109/SysEng.2016.7753141      None   
+18               0  2016-11-16  10.1080/10911359.2016.1236000  15403556   
+19               0  2016-11-10      10.1007/s10699-016-9509-4  15728471   
+
+             isbn      issn page_range  \
+0            None  23301635    378-391   
+1            None  14626268       1-16   
+2            None  13561820     98-104   
+3            None  17557437    185-193   
+4   9783319490571  21945357    543-549   
+5            None  00208728      45-60   
+6            None  87563894      46-52   
+7            None  09284931    913-929   
+8            None  08853282    901-910   
+9            None  03756742    120-132   
+10           None  00032417      45-51   
+11           None  10499091   996-1012   
+12           None  00910562    303-308   
+13           None  07340664    545-553   
+14           None  1082989X    507-525   
+15  9781509017904  15394565              
+16  9781509007783      None              
+17  9781509007936      None              
+18           None  10911359    565-574   
+19           None  12331821       1-18   
+
+                                     publication_name    scopus_id  \
+0   Journal of the Association for Information Sci...  84962866808   
+1                                  Digital Creativity  85009973282   
+2                   Journal of Interprofessional Care  85006836390   
+3   International Journal of Design and Nature and...  85008429090   
+4       Advances in Intelligent Systems and Computing  85007284935   
+5                           International Social Work  85008654399   
+6                                          TechTrends  84994222304   
+7                 Materials Science and Engineering C  85010821977   
+8                Journal of Biomaterials Applications  85006700597   
+9                  Journal of Geochemical Exploration  84992597891   
+10                                       Anaesthesist  85003906133   
+11  American Journal of Hospice and Palliative Med...  84994104586   
+12           American Journal of Community Psychology  85006141494   
+13                                      Gerodontology  84940851069   
+14                              Psychological Methods  85004097351   
+15  Proceedings - Frontiers in Education Conferenc...  85006790217   
+16  2016 15th International Conference on Informat...  85007322764   
+17  ISSE 2016 - 2016 International Symposium on Sy...  85006511286   
+18  Journal of Human Behavior in the Social Enviro...  84991503334   
+19                             Foundations of Science  84994791035   
+
+   subtype_description                                              title  \
+0              Article  Impact in interdisciplinary and cross-sector r...   
+1     Article in Press  Pain matters: outliers in new tribes and terri...   
+2              Article  Different perceptions of interprofessional col...   
+3              Article  The de Mestral project: Using macro photo-jour...   
+4     Conference Paper  Why does architecture need to move? The role o...   
+5              Article  Do national welfare systems have an influence ...   
+6              Article  Identifying Interdisciplinary Research Collabo...   
+7               Review  A current overview of materials and strategies...   
+8              Article  Synthesis and characterization of fluorescein-...   
+9               Review   Acid rock drainage prediction: A critical review   
+10             Article  Practical training for paramedics: Transformat...   
+11             Article  Communication Within Hospice Interdisciplinary...   
+12                Note  Cultivating Community Psychology for Future Ge...   
+13             Article  Development of a community-based oral healthca...   
+14             Article  Gaining insights from social media language: M...   
+15    Conference Paper  Robotic football dance team: An engineering Fi...   
+16    Conference Paper  Performance evaluation of practice courses usi...   
+17    Conference Paper  A concept for managing information in early st...   
+18             Article  Promoting public health through community enga...   
+19    Article in Press  Vibrantly Entangled in Sri Lanka: Food as the ...   
+
+           volume  
+0              68  
+1            None  
+2              31  
+3              12  
+4             540  
+5              60  
+6              61  
+7              70  
+8              31  
+9             172  
+10             66  
+11             33  
+12             58  
+13             33  
+14             21  
+15  2016-November  
+16           None  
+17           None  
+18             26  
+19           None  
+</code></pre>
+
+You can see the results are now ordered by dates. A *TODO* at this moment is to add a sort parameter to allow different sorting schemes.
+
+#### * *An example data collection pipeline*
+First we search for a spefic author:
+
+{% highlight python %}
 # search for my advisor
 query_dict = {'affil': 'University of Iowa', 'authfirst': 'Kang', 'authlast': 'Zhao'}
 author_results = scopus.search_author(query_dict)
