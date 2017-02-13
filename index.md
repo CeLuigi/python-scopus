@@ -51,7 +51,7 @@ $ cd python-scopus/
 $ python setup.py install
 {%endhighlight%}
 
-A tarball can also be downloaded via PyScopus's <a href="https://pypi.python.org/pypi?name=pyscopus&version=0.7.2.post4&:action=display" target="_blank">PyPI page</a> or <a href="https://github.com/zhiyzuo/python-scopus/tarball/0.7.2.post4" target="_blank">this download link</a>.
+A tarball can also be downloaded via PyScopus's <a href="https://pypi.python.org/pypi/pyscopus/0.7.2.post6" target="_blank">PyPI page</a> or <a href="https://github.com/zhiyzuo/python-scopus/tarball/0.7.2.post4" target="_blank">this download link</a>.
 
 {%highlight bash%}
 $ tar -xvzf zhiyzuo-python-scopus-0.7.2.post4-0-ge4fd2dd.tar.gz
