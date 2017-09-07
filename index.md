@@ -3,6 +3,8 @@ layout: default
 title: "Get Started"
 ---
 
+#### Last updated 09/07/2017
+
 ### Reference
 
 Please consider citating one or both of our papers below when you use PyScopus:
@@ -25,7 +27,7 @@ PyScopus requires:
 
 + [Pandas](http://pandas.pydata.org/)
 
-+ [BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/)
++ [Requests](http://docs.python-requests.org/en/master/)
 
 ##### 1. Using `pip` or `easy_install`
 
@@ -51,11 +53,11 @@ $ cd python-scopus/
 $ python setup.py install
 {%endhighlight%}
 
-A tarball can also be downloaded via PyScopus's <a href="https://pypi.python.org/pypi/pyscopus/0.7.3" target="_blank">PyPI page</a> or <a href="https://github.com/zhiyzuo/python-scopus/tarball/0.7.3" target="_blank">this download link</a>.
+A tarball can also be downloaded via PyScopus's <a href="https://pypi.python.org/pypi/pyscopus/0.8rc2" target="_blank">PyPI page</a> or <a href="https://github.com/zhiyzuo/python-scopus/tarball/0.8rc2" target="_blank">this download link</a>.
 
 {%highlight bash%}
-$ tar -xvzf zhiyzuo-python-scopus-0.7.3-0-gafc32c3.tar.gz
-$ cd zhiyzuo-python-scopus-0.7.3-0-gafc32c3/
+$ tar -xvzf pyscopus-0.8rc2.tar.gz
+$ cd pyscopus-0.8rc2.tar.gz/
 $ python setup.py install
 {%endhighlight%}
 
