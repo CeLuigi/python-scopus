@@ -5,3 +5,5 @@ python_scopus.egg-info/
 dist/
 build/
 pyscopus/
+.DS_Store
+.ipynb_checkpoints/
