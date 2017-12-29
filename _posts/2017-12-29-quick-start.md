@@ -1,97 +1,32 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width">
+---
+layout: page
+title: "Quick Start"
+category: doc
+date: 2016-02-11 22:37:36
+---
 
-        <title>PyScopus : Quick Start</title>
-        <meta name="description" content="Python Wrapper for Scopus API">
+### _Note that API keys are hidden. Please get your own API keys._
 
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="/python-scopus/css/syntax.css">
-        <link rel="stylesheet" href="/python-scopus/css/main.css">
-    </head>
-    <body>
+<hr>
+This quick start example is also available in [__Jupyter Notebook__ format](https://nbviewer.jupyter.org/github/zhiyzuo/python-scopus/blob/master/Quick-Start.ipynb).
+<hr>
 
-        <a href="https://github.com/zhiyzuo/python-scopus"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+Import `Scopus` class and initialize with your own __API Key__
 
-        <div class="container">
-            <div class="row">
-                <div id="header" class="col-sm-12">
-                    <h4><a class="brand" href="/python-scopus/">PyScopus</a>
-    <small>Python Wrapper for Scopus API</small>
-</h4>
 
-                </div>
-            </div>
+{% highlight python %}
+>>> from pyscopus import Scopus
+>>> key = 'xxxxxxxxxx'
+>>> scopus = Scopus(key)
+{% endhighlight %}
 
-            <div class="row">
-                
-                
-                    <div id="navigation" class="col-sm-2">
-                        <ul class="nav nav-list">
-    <li><a href="/python-scopus/">Home</a></li>
-    
-        
-        
+<hr>
 
-        
-            
-                <li class="nav-header">Documentation</li>
-            
-            <li data-order=""><a href="/python-scopus/doc/quick-start.html">Quick Start</a></li>
-        
-            
-            <li data-order=""><a href="/python-scopus/doc/scopus-api.html">API Index</a></li>
-        
-    
-        
-        
-
-        
-            
-                <li class="nav-header">Miscellaneous</li>
-            
-            <li data-order=""><a href="/python-scopus/misc/contact.html">Contact</a></li>
-        
-            
-            <li data-order=""><a href="/python-scopus/misc/license.html">License</a></li>
-        
-    
-<!-- List additional links. It is recommended to add a divider
-    e.g.  first to break up the content. -->
-    <li class="divider"></li>
-</ul>
-
-                    </div>
-
-                    <div id="content" class="col-sm-10">
-                        <div class="page-header">
-    <h2>Quick Start
-        
-    </h2>
-</div>
-
-<h3 id="note-that-api-keys-are-hidden-please-get-your-own-api-keys"><em>Note that API keys are hidden. Please get your own API keys.</em></h3>
-
-<hr />
-
-<p>This quick start example is also available in <a href="https://nbviewer.jupyter.org/github/zhiyzuo/python-scopus/blob/master/Quick-Start.ipynb"><strong>Jupyter Notebook</strong> format</a>.</p>
-<hr />
-
-<p>Import <code class="highlighter-rouge">Scopus</code> class and initialize with your own <strong>API Key</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pyscopus</span> <span class="kn">import</span> <span class="n">Scopus</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">key</span> <span class="o">=</span> <span class="s">'xxxxxxxxxx'</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">scopus</span> <span class="o">=</span> <span class="n">Scopus</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></code></pre></figure>
-
-<hr />
-
-<h4 id="general-search">General Search</h4>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">search_df</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">"KEY(interdisciplinary collaboration)"</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">search_df</span><span class="p">)</span></code></pre></figure>
+#### General Search
+{% highlight python %}
+>>> search_df = scopus.search("KEY(interdisciplinary collaboration)", count=30)
+>>> print(search_df)
+{% endhighlight %}
 
 <pre class="longoutput"><code>affiliation       aggregation_type  \
 0   [{'name': 'Beijing Normal University', 'city':...                Journal   
@@ -286,27 +221,34 @@
 29       10  
 </code></pre>
 
-<hr />
+<hr>
 
-<h4 id="search-for-a-specific-author">Search for a specific author</h4>
+#### Search for a specific author
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">author_result_df</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search_author</span><span class="p">(</span><span class="s">"AUTHLASTNAME(Zhao) and AUTHFIRST(Kang) and AFFIL(Iowa)"</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">author_result_df</span><span class="p">)</span></code></pre></figure>
+
+{% highlight python %}
+>>> author_result_df = scopus.search_author("AUTHLASTNAME(Zhao) and AUTHFIRST(Kang) and AFFIL(Iowa)")
+>>> print(author_result_df)
+{% endhighlight %}
 
 <pre><code>     affiliation affiliation_id    author_id  document_count       name
 0  University of Iowa       60024324  36635367700              39  Kang Zhao
 1  University of Iowa       60024324  57077574400               1  Kang Zhao
 </code></pre>
 
-<p>Then we can retrieve more detailed info about the author we are looking for using his/her <strong>author_id</strong>:</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">kang_info_dict</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_author</span><span class="p">(</span><span class="s">'36635367700'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">kang_info_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-<span class="n">dict_keys</span><span class="p">([</span><span class="s">'author-id'</span><span class="p">,</span> <span class="s">'eid'</span><span class="p">,</span> <span class="s">'document-count'</span><span class="p">,</span> <span class="s">'cited-by-count'</span><span class="p">,</span> <span class="s">'citation-count'</span><span class="p">,</span> <span class="s">'name'</span><span class="p">,</span> <span class="s">'last'</span><span class="p">,</span> <span class="s">'first'</span><span class="p">,</span> <span class="s">'indexed-name'</span><span class="p">,</span> <span class="s">'publication-range'</span><span class="p">,</span> <span class="s">'affiliation-current'</span><span class="p">,</span> <span class="s">'journal-history'</span><span class="p">,</span> <span class="s">'affiliation-history'</span><span class="p">])</span></code></pre></figure>
+Then we can retrieve more detailed info about the author we are looking for using his/her __author_id__:
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">kang_info_dict</span><span class="p">[</span><span class="s">'affiliation-history'</span><span class="p">])</span></code></pre></figure>
+{% highlight python %}
+>>> kang_info_dict = scopus.retrieve_author('36635367700')
+>>> kang_info_dict.keys()
+dict_keys(['author-id', 'eid', 'document-count', 'cited-by-count', 'citation-count', 'name', 'last', 'first', 'indexed-name', 'publication-range', 'affiliation-current', 'journal-history', 'affiliation-history'])
+{% endhighlight %}
 
-<pre class="longoutput"><code>id                                               name parent-id  \
+{% highlight python %}
+>>> print(kang_info_dict['affiliation-history'])
+{% endhighlight %}
+<pre class='longoutput'><code>id                                               name parent-id  \
 0   60024324                                 University of Iowa      None   
 1  104227060  University of Iowa, Department of Management S...  60024324   
 2  104227074     University of Iowa, Tippie College of Business  60024324   
@@ -331,13 +273,16 @@
 5  usa, State College, PA, United States  
 </code></pre>
 
-<p>We can also search for his publications explicitly</p>
+We can also search for his publications explicitly
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">kang_pub_df</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search_author_publication</span><span class="p">(</span><span class="s">'36635367700'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">kang_pub_df</span><span class="p">[[</span><span class="s">'title'</span><span class="p">,</span> <span class="s">'cover_date'</span><span class="p">,</span> <span class="s">'publication_name'</span><span class="p">]]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s">'cover_date'</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></code></pre></figure>
+{% highlight python %}
+>>> kang_pub_df = scopus.search_author_publication('36635367700')
+>>> kang_pub_df[['title', 'cover_date', 'publication_name']].sort_values('cover_date').reset_index(drop=True)
+{% endhighlight %}
+
 
 <div>
-    <style scoped="">
+    <style scoped>
         .dataframe tbody tr th:only-of-type {
             vertical-align: middle;
         }
@@ -598,41 +543,43 @@
     </table>
 </div>
 
-<hr />
+<hr>
+#### Abstract retrieval
 
-<h4 id="abstract-retrieval">Abstract retrieval</h4>
+{% highlight python %}
+>>> pub_info = scopus.retrieve_abstract('84905286162')
+>>> print(pub_info)
+{'abstract': "Online health communities (OHCs) have become a major source of support for people with health problems. This research tries to improve our understanding of social influence and to identify influential users in OHCs. The outcome can facilitate OHC management, improve community sustainability, and eventually benefit OHC users. Through text mining and sentiment analysis of users' online interactions, the research revealed sentiment dynamics in threaded discussions. A novel metric--the number of influential responding replies--was proposed to directly measure a user's ability to affect the sentiment of others. Using the dataset from a popular OHC, the research demonstrated that the proposed metric is highly effective in identifying influential users. In addition, combining the metric with other traditional measures further improves the identification of influential users. Published by the BMJ Publishing Group Limited. For permission to use (where not already granted under a licence) please go to http://group.bmj.com/group/rights-licensing/permissions.",
+ 'citedby-count': '29',
+ 'eid': '2-s2.0-84905286162',
+ 'prism:aggregationType': 'Journal',
+ 'prism:coverDate': '2014-01-01',
+ 'prism:doi': '10.1136/amiajnl-2013-002282',
+ 'prism:issn': '1527974X',
+ 'prism:issueIdentifier': 'e2',
+ 'prism:publicationName': 'Journal of the American Medical Informatics Association : JAMIA',
+ 'prism:url': 'http://api.elsevier.com/content/abstract/scopus_id/84905286162',
+ 'prism:volume': '21',
+ 'pubmed-id': '24449805',
+ 'scopus-id': '84905286162',
+ 'source-id': '23600',
+ 'srctype': 'j',
+ 'title': 'Finding influential users of online health communities: a new metric based on sentiment influence.'}
+{% endhighlight %}
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">pub_info</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_abstract</span><span class="p">(</span><span class="s">'84905286162'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">pub_info</span><span class="p">)</span>
-<span class="p">{</span><span class="s">'abstract'</span><span class="p">:</span> <span class="s">"Online health communities (OHCs) have become a major source of support for people with health problems. This research tries to improve our understanding of social influence and to identify influential users in OHCs. The outcome can facilitate OHC management, improve community sustainability, and eventually benefit OHC users. Through text mining and sentiment analysis of users' online interactions, the research revealed sentiment dynamics in threaded discussions. A novel metric--the number of influential responding replies--was proposed to directly measure a user's ability to affect the sentiment of others. Using the dataset from a popular OHC, the research demonstrated that the proposed metric is highly effective in identifying influential users. In addition, combining the metric with other traditional measures further improves the identification of influential users. Published by the BMJ Publishing Group Limited. For permission to use (where not already granted under a licence) please go to http://group.bmj.com/group/rights-licensing/permissions."</span><span class="p">,</span>
- <span class="s">'citedby-count'</span><span class="p">:</span> <span class="s">'29'</span><span class="p">,</span>
- <span class="s">'eid'</span><span class="p">:</span> <span class="s">'2-s2.0-84905286162'</span><span class="p">,</span>
- <span class="s">'prism:aggregationType'</span><span class="p">:</span> <span class="s">'Journal'</span><span class="p">,</span>
- <span class="s">'prism:coverDate'</span><span class="p">:</span> <span class="s">'2014-01-01'</span><span class="p">,</span>
- <span class="s">'prism:doi'</span><span class="p">:</span> <span class="s">'10.1136/amiajnl-2013-002282'</span><span class="p">,</span>
- <span class="s">'prism:issn'</span><span class="p">:</span> <span class="s">'1527974X'</span><span class="p">,</span>
- <span class="s">'prism:issueIdentifier'</span><span class="p">:</span> <span class="s">'e2'</span><span class="p">,</span>
- <span class="s">'prism:publicationName'</span><span class="p">:</span> <span class="s">'Journal of the American Medical Informatics Association : JAMIA'</span><span class="p">,</span>
- <span class="s">'prism:url'</span><span class="p">:</span> <span class="s">'http://api.elsevier.com/content/abstract/scopus_id/84905286162'</span><span class="p">,</span>
- <span class="s">'prism:volume'</span><span class="p">:</span> <span class="s">'21'</span><span class="p">,</span>
- <span class="s">'pubmed-id'</span><span class="p">:</span> <span class="s">'24449805'</span><span class="p">,</span>
- <span class="s">'scopus-id'</span><span class="p">:</span> <span class="s">'84905286162'</span><span class="p">,</span>
- <span class="s">'source-id'</span><span class="p">:</span> <span class="s">'23600'</span><span class="p">,</span>
- <span class="s">'srctype'</span><span class="p">:</span> <span class="s">'j'</span><span class="p">,</span>
- <span class="s">'title'</span><span class="p">:</span> <span class="s">'Finding influential users of online health communities: a new metric based on sentiment influence.'</span><span class="p">}</span></code></pre></figure>
+<hr>
+__Note that Searching for articles in specific journals (venues) is not supported anymore since this can be easily done by `general search`__
+<hr>
 
-<hr />
+#### Citation count retrieval
 
-<p><strong>Note that Searching for articles in specific journals (venues) is not supported anymore since this can be easily done by <code class="highlighter-rouge">general search</code></strong></p>
-<hr />
+__Note that the use of `citation overview API` needs to be approved by Elsevier.__
 
-<h4 id="citation-count-retrieval">Citation count retrieval</h4>
-
-<p><strong>Note that the use of <code class="highlighter-rouge">citation overview API</code> needs to be approved by Elsevier.</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">pub_citations_df</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_citation</span><span class="p">(</span><span class="n">scopus_id_array</span><span class="o">=</span><span class="p">[</span><span class="s">'84905286162'</span><span class="p">,</span> <span class="s">'0141607824'</span><span class="p">],</span>
-                                            <span class="n">year_range</span><span class="o">=</span><span class="p">[</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">2014</span><span class="p">])</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">pub_citations_df</span><span class="p">)</span></code></pre></figure>
+{% highlight python %}
+>>> pub_citations_df = scopus.retrieve_citation(scopus_id_array=['84905286162', '0141607824'],
+                                            year_range=[2010, 2014])
+>>> print(pub_citations_df)
+{% endhighlight %}
 
 <pre><code>     scopus_id previous_citation 2010 2011  2012  2013  2014 later_citation  \
 0  84905286162                 0    0    0     0     0     3             26   
@@ -643,73 +590,4 @@
 1          11458  
 </code></pre>
 
-<hr />
-
-
-
-                    </div>
-                
-            </div>
-
-            
-
-            <div class="row">
-                <div id="footer" class="col-sm-12">
-                    Documentation for <a href="https://github.com/zhiyzuo/python-scopus">PyScopus</a>
-
-                </div>
-            </div>
-        </div>
-
-        <script>
-            function orderNav() {
-                var list,
-                    section,
-                    header,
-                    sections = [],
-                    lists = {},
-                    headers = {};
-
-                var navUl = document.querySelectorAll('#navigation ul')[0],
-                    navLis = document.querySelectorAll('#navigation ul li');
-
-                if (!navUl) return;
-
-                for (var i = 0; i < navLis.length; i++) {
-                    var order, li = navLis[i];
-
-                    if (li.classList.contains('nav-header')) {
-                        section = li.textContent || li.innerText;
-                        sections.push(section);
-                        headers[section] = li;
-                        continue;
-                    }
-
-                    if (!lists[section]) {
-                        lists[section] = [];
-                    }
-
-                    order = parseFloat(li.getAttribute('data-order'))
-                    lists[section].push([order, li]);
-                }
-
-                for (var i = 0; i < sections.length; i++) {
-                    section = sections[i];
-                    list = lists[section].sort(function(a, b) {
-                        return a[0] - b[0];
-                    });
-
-                    if (header = headers[section]) {
-                        navUl.appendChild(header);
-                    }
-                    for (var j = 0; j < list.length; j++) {
-                        navUl.appendChild(list[j][1]);
-                    }
-                }
-            }
-
-            if (document.querySelectorAll) orderNav();
-        </script>
-        
-    </body>
-</html>
+<hr>

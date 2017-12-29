@@ -3,7 +3,7 @@ layout: default
 title: "Get Started"
 ---
 
-#### Last updated 12/28/2017
+#### Last updated 12/29/2017
 
 ### Reference
 
@@ -29,12 +29,12 @@ PyScopus requires:
 
 + [Requests](http://docs.python-requests.org/en/master/)
 
-##### 1. Using `pip` or `easy_install`
+##### 1. Using `pip`
 
 The easiest way of installing PyScopus is to use `pip`:
 
 {%highlight bash%}
-$ pip install pyscopus==0.8rc5
+$ pip install pyscopus==0.9.0
 {%endhighlight%}
 
 ##### 2. Manual installation
@@ -47,11 +47,11 @@ $ cd python-scopus/
 $ python setup.py install
 {%endhighlight%}
 
-A tarball can also be downloaded via PyScopus's <a href="https://pypi.python.org/pypi/pyscopus/0.8rc5" target="_blank">PyPI page</a> or <a href="https://github.com/zhiyzuo/python-scopus/tarball/0.8rc5" target="_blank">this download link</a>.
+A tarball can also be downloaded via PyScopus's <a href="https://pypi.python.org/pypi/pyscopus/0.9.0" target="_blank">PyPI page</a> or <a href="https://github.com/zhiyzuo/python-scopus/tarball/0.9.0" target="_blank">this download link</a>.
 
 {%highlight bash%}
-$ tar -xvzf pyscopus-0.8rc5.tar.gz
-$ cd pyscopus-0.8rc5.tar.gz/
+$ tar -xvzf pyscopus-0.9.0.tar.gz
+$ cd pyscopus-0.9.0.tar.gz/
 $ python setup.py install
 {%endhighlight%}
 
