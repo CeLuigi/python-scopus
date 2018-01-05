@@ -3,19 +3,21 @@ layout: default
 title: "Get Started"
 ---
 
-#### Last updated 12/29/2017
+#### Last updated 01-05-2018
 
 ### Reference
 
-Please consider citating one or both of our papers below when you use PyScopus:
+Please consider citating one or both of our papers below when you use ___PyScopus___:
 
-[1] Zuo, Zhiya, Kang Zhao, and David Eichmann. "The State and Evolution of U.S. ISchools: From Talent Acquisitions to Research Outcome." *Journal of the Association for Information Science and Technology* (2016)
+Zuo, Z., Zhao, K., & Eichmann, D. (2017). __The State and Evolution of U.S. iSchools – from Talent Acquisitions to Research Outcome__. *Journal of the Association for Information Science and Technology*, 68(5), 1266–1277. https://doi.org/10.1002/asi.23751
 
-[2] Zhiya Zuo, Xi Wang, David Eichmann, and Kang Zhao. 2016. Research Collaborations in Multidisciplinary Institutions: a Case Study of iSchools. *In Proceedings of the 25th International Conference Companion on World Wide Web* (WWW '16 Companion). International World Wide Web Conferences Steering Committee, Republic and Canton of Geneva, Switzerland, 443-448. DOI=http://dx.doi.org/10.1145/2872518.2890522
+---
 
 ### Get Acquinted with Scopus API
 
 Please first refer to [Elsevier Developer Portal](http://dev.elsevier.com/index.html) for detailed information before using this wrapper.
+
+---
 
 ### Download
 
@@ -34,7 +36,7 @@ PyScopus requires:
 The easiest way of installing PyScopus is to use `pip`:
 
 {%highlight bash%}
-$ pip install pyscopus==0.9.0rc2
+$ pip install pyscopus==0.9.0rc3
 {%endhighlight%}
 
 ##### 2. Manual installation
@@ -47,11 +49,11 @@ $ cd python-scopus/
 $ python setup.py install
 {%endhighlight%}
 
-A tarball can also be downloaded via PyScopus's <a href="https://pypi.python.org/pypi/pyscopus/0.9.0rc2" target="_blank">PyPI page</a> or <a href="https://github.com/zhiyzuo/python-scopus/tarball/0.9.0rc2" target="_blank">this download link</a>.
+A tarball can also be downloaded via PyScopus's <a href="https://pypi.python.org/pypi/pyscopus/0.9.0rc3" target="_blank">PyPI page</a> or <a href="https://github.com/zhiyzuo/python-scopus/tarball/0.9.0rc3" target="_blank">this download link</a>.
 
 {%highlight bash%}
-$ tar -xvzf pyscopus-0.9.0rc2.tar.gz
-$ cd pyscopus-0.9.0rc2.tar.gz/
+$ tar -xvzf pyscopus-0.9.0rc3.tar.gz
+$ cd pyscopus-0.9.0rc3.tar.gz/
 $ python setup.py install
 {%endhighlight%}
 

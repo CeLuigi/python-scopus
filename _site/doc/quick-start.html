@@ -91,199 +91,129 @@
 <h4 id="general-search">General Search</h4>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">search_df</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">"KEY(interdisciplinary collaboration)"</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">search_df</span><span class="p">)</span></code></pre></figure>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">search_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span></code></pre></figure>
 
-<pre class="longoutput"><code>affiliation       aggregation_type  \
-0   [{'name': 'Beijing Normal University', 'city':...                Journal   
-1   [{'name': 'University of Nebraska at Omaha', '...                Journal   
-2   [{'name': 'Philadelphia University', 'city': '...                Journal   
-3   [{'name': 'Technische Universitat Wien', 'city...                Journal   
-4   [{'name': 'University of California, San Franc...                Journal   
-5   [{'name': 'Monash University', 'city': 'Melbou...                Journal   
-6   [{'name': 'Virginia Polytechnic Institute and ...            Book Series   
-7   [{'name': 'University of Wisconsin School of M...                Journal   
-8   [{'name': 'Swinburne University of Technology'...                Journal   
-9   [{'name': 'University of Missouri School of Me...                Journal   
-10  [{'name': 'Douglas Mental Health University In...                Journal   
-11  [{'name': 'Brigham and Women's Hospital', 'cit...                Journal   
-12  [{'name': 'Universite Nice Sophia Antipolis', ...                Journal   
-13  [{'name': 'University of South Carolina', 'cit...                Journal   
-14  [{'name': 'University of Florida', 'city': 'Ga...                Journal   
-15  [{'name': 'Medizinische Hochschule Hannover (M...                Journal   
-16  [{'name': 'Children and Screens: Institute of ...                Journal   
-17  [{'name': 'National Institute on Aging', 'city...                Journal   
-18  [{'name': 'Maimonides Medical Center', 'city':...                Journal   
-19  [{'name': 'Universitatea Politehnica din Timis...                Journal   
-20  [{'name': 'Universita degli Studi di Milano', ...                Journal   
-21  [{'name': 'Baylor College of Medicine', 'city'...                Journal   
-22  [{'name': 'Leibniz-Zentrum fur Agrarlandschaft...                Journal   
-23  [{'name': 'University of Iceland', 'city': 'Re...  Conference Proceeding   
-24  [{'name': 'UT Medical Branch at Galveston', 'c...                Journal   
-25  [{'name': 'University of Utah', 'city': 'Salt ...  Conference Proceeding   
-26  [{'name': 'DePaul University', 'city': 'Chicag...  Conference Proceeding   
-27  [{'name': 'Fachhochschule Munster - Abteilung ...  Conference Proceeding   
-28  [{'name': 'Universitatsklinikum Jena und Mediz...                Journal   
-29  [{'name': 'Hokkaido University', 'city': 'Sapp...                Journal   
+<pre class="longoutput"><code>affiliation aggregation_type  \
+0  [{'name': 'Institute of Informatics and Teleco...          Journal   
+1  [{'name': 'University of Jinan', 'city': 'Jina...          Journal   
+2  [{'name': 'University of South Carolina', 'cit...          Journal   
+3  [{'name': 'University of Nottingham', 'city': ...          Journal   
+4  [{'name': 'Shenzhen University', 'city': 'Qing...          Journal   
+5  [{'name': 'South China University of Technolog...          Journal   
+6  [{'name': 'Hopital Tenon', 'city': 'Paris', 'c...          Journal   
+7  [{'name': 'Beijing University of Posts and Tel...      Book Series   
+8  [{'name': 'Moscow Institute of Physics and Tec...      Book Series   
+9  [{'name': 'Indian Institute of Information Tec...      Book Series   
 
-    citation_count  cover_date                                 doi     eissn  \
-0                0  2018-05-01     10.1016/j.scitotenv.2017.11.326  18791026   
-1                0  2018-02-01           10.1016/j.pcl.2017.08.027  15578240   
-2                0  2018-02-01           10.1016/j.pcl.2017.08.020  15578240   
-3                0  2018-02-01        10.1016/j.respol.2017.09.010      None   
-4                0  2018-02-01          10.1016/j.iccn.2017.07.001      None   
-5                0  2018-01-02       10.1080/13561820.2017.1381077  14699567   
-6                0  2018-01-01        10.1007/978-3-319-60937-9_27      None   
-7                1  2018-01-01          10.1016/j.acra.2017.05.020  18784046   
-8                0  2017-12-02       10.1080/09544828.2017.1395395  14661837   
-9                0  2017-12-01            10.1177/1049909117693577  19382715   
-10               1  2017-12-01           10.1007/s11126-017-9500-4  15736709   
-11               0  2017-12-01        10.1016/j.anclin.2017.07.005  22103538   
-12               0  2017-12-01           10.1007/s12520-014-0185-4  18669565   
-13               0  2017-12-01        10.1016/j.soscij.2017.07.009      None   
-14               0  2017-11-01             10.1111/1556-4029.13470  15564029   
-15               0  2017-11-01               10.1055/s-0043-119290  14393824   
-16               0  2017-11-01             10.1542/peds.2016-1758B  10984275   
-17               0  2017-11-01                   10.1111/jgs.15052  15325415   
-18               0  2017-11-01              10.1542/peds.2017-1427  10984275   
-19               0  2017-11-01  10.1061/(ASCE)SU.1943-5428.0000218      None   
-20               0  2017-11-01        10.1016/j.compag.2017.09.030      None   
-21               0  2017-11-01              10.1542/peds.2017-0505  10984275   
-22               0  2017-10-26                   10.3390/su9111926  20711050   
-23               0  2017-10-23             10.1145/3141865.3142467      None   
-24               0  2017-10-18        10.1021/acschemneuro.7b00316  19487193   
-25               0  2017-10-15             10.1145/3130859.3131333      None   
-26               0  2017-10-15             10.1145/3116595.3116600      None   
-27               0  2017-10-13          10.1109/ITHET.2017.8067820      None   
-28               0  2017-10-12           10.1007/s00063-017-0362-1  21936226   
-29               0  2017-10-11                10.2147/JMDH.S144526  11782390   
+                                             authors  citation_count  \
+0                          [57191094398, 8723549900]               0   
+1  [56177015500, 56177015500, 7409491657, 7409491...               0   
+2  [36519126000, 56937992800, 7801439333, 2408066...               0   
+3  [51665107100, 38161915200, 57199156035, 234712...               0   
+4  [56349712700, 56349712700, 55739099100, 568013...               0   
+5  [57196023747, 57196027721, 55538918200, 710229...               0   
+6  [7005233421, 55406676800, 55364211300, 5718548...               0   
+7            [57193130741, 55571529600, 57196003124]               0   
+8             [57199062408, 57199054340, 6507982932]               0   
+9             [49361023900, 8533679400, 57194438376]               0   
 
-             isbn      issn page_range  \
-0            None  00489697    493-501   
-1            None  00313955    143-155   
-2            None  00313955      47-57   
-3            None  00487333      35-48   
-4            None  09643397      18-23   
-5            None  13561820      63-68   
-6   9783319609362  21945357    352-367   
-7            None  10766332       9-17   
-8            None  09544828    765-798   
-9            None  10499091    901-906   
-10           None  00332720    827-838   
-11           None  19322275    601-610   
-12           None  18669557  1603-1612   
-13           None  03623319    458-467   
-14           None  00221198  1647-1654   
-15           None  03008630    316-321   
-16           None  00314005    S51-S56   
-17           None  00028614  2441-2445   
-18           None  00314005       None   
-19           None  07339453       None   
-20           None  01681699    424-428   
-21           None  00314005       None   
-22           None      None       None   
-23  9781450355179      None      46-47   
-24           None      None  2100-2101   
-25  9781450351119      None    405-412   
-26  9781450348980      None    291-303   
-27  9781538639689      None       None   
-28           None  21936218        1-5   
-29           None      None    399-407   
+   cover_date                              doi     eissn  \
+0  2018-04-15       10.1016/j.eswa.2017.11.050      None   
+1  2018-03-15       10.1016/j.eswa.2017.10.037      None   
+2  2018-02-01  10.1016/j.ijinfomgt.2017.08.002      None   
+3  2018-02-01  10.1016/j.prevetmed.2017.11.020      None   
+4  2018-01-17     10.1016/j.neucom.2017.08.022  18728286   
+5  2018-01-15     10.1016/j.knosys.2017.10.031      None   
+6  2018-01-02    10.1080/14737167.2017.1359542  17448379   
+7  2018-01-01     10.1007/978-981-10-6445-6_72  18761119   
+8  2018-01-01     10.1007/978-3-319-71746-3_16      None   
+9  2018-01-01     10.1007/978-3-319-68385-0_11      None   
 
-                                     publication_name    scopus_id  \
-0                    Science of the Total Environment  85036647140   
-1                  Pediatric Clinics of North America  85035032871   
-2                  Pediatric Clinics of North America  85035066203   
-3                                     Research Policy  85033491209   
-4                 Intensive and Critical Care Nursing  85028624027   
-5                   Journal of Interprofessional Care  85031933779   
-6       Advances in Intelligent Systems and Computing  85025807393   
-7                                  Academic Radiology  85028323720   
-8                       Journal of Engineering Design  85033437283   
-9   American Journal of Hospice and Palliative Med...  85032888667   
-10                              Psychiatric Quarterly  85013059761   
-11                             Anesthesiology Clinics  85034242478   
-12        Archaeological and Anthropological Sciences  85036562680   
-13                             Social Science Journal  85028332507   
-14                       Journal of Forensic Sciences  85018991781   
-15                                Klinische Padiatrie  85031940447   
-16                                         Pediatrics  85034023085   
-17         Journal of the American Geriatrics Society  85034054567   
-18                                         Pediatrics  85034103814   
-19                   Journal of Surveying Engineering  85018978233   
-20           Computers and Electronics in Agriculture  85030118345   
-21                                         Pediatrics  85034101645   
-22                       Sustainability (Switzerland)  85032380806   
-23  SEPS 2017 - Proceedings of the 4th ACM SIGPLAN...  85037139471   
-24                          ACS Chemical Neuroscience  85031688464   
-25  CHI PLAY 2017 Extended Abstracts - Extended Ab...  85034759003   
-26  CHI PLAY 2017 - Proceedings of the Annual Symp...  85034641024   
-27  2017 16th International Conference on Informat...  85037077063   
-28  Medizinische Klinik - Intensivmedizin und Notf...  85031726522   
-29            Journal of Multidisciplinary Healthcare  85034808036   
+                                           full_text           isbn      issn  \
+0  http://api.elsevier.com/content/article/eid/1-...           None  09574174   
+1  http://api.elsevier.com/content/article/eid/1-...           None  09574174   
+2  http://api.elsevier.com/content/article/eid/1-...           None  02684012   
+3  http://api.elsevier.com/content/article/eid/1-...           None  01675877   
+4  http://api.elsevier.com/content/article/eid/1-...           None  09252312   
+5  http://api.elsevier.com/content/article/eid/1-...           None  09507051   
+6                                               None           None  14737167   
+7                                               None  9789811064449  18761100   
+8                                               None  9783319717456  18650929   
+9                                               None  9783319683843  21945357   
 
-   subtype_description                                              title  \
-0               Review  Climate change and dengue fever transmission i...   
-1               Review  Interprofessional Collaborative Practice in Ea...   
-2               Review  Supporting Children with Autism and Their Fami...   
-3              Article  Gaining insight into interdisciplinary researc...   
-4              Article  Impact of surgical intensive care unit interdi...   
-5              Article  Translation and psychometric evaluation of the...   
-6     Conference Paper  A virtual learning system in environmental mon...   
-7               Review  Promoting Collaborations Between Radiologists ...   
-8              Article  Implementing shared function modelling in prac...   
-9              Article  A Qualitative Analysis of Information Sharing ...   
-10             Article  Profiles of mental health care professionals b...   
-11              Review        Use of Anesthesiology Services in Radiology   
-12             Article  Together in the field: interdisciplinary work ...   
-13             Article  Team science: A qualitative study of benefits,...   
-14             Article  Skeletal Indicators of Shark Feeding on Human ...   
-15    Conference Paper  SICKODevelopment of a Multi-Disciplinary Train...   
-16              Review                                       Introduction   
-17             Article  Aging Research: Collaborations Forge a Promisi...   
-18             Article  Social determinants of health and hospital rea...   
-19             Article  Road-structure monitoring with modern geodetic...   
-20             Article  Application note: Labelling, a methodology to ...   
-21              Review                  Bringing back the term "intersex"   
-22             Article  The adoption and implementation of transdiscip...   
-23    Conference Paper  Facilitating collaboration in high-performance...   
-24             Article  Why I'm Not a Cognitive Psychologist... or a B...   
-25    Conference Paper  Design box case study: Facilitating interdisci...   
-26    Conference Paper  Leveraging design patterns to support designer...   
-27    Conference Paper  Peer review as a quality management tool embed...   
-28    Article in Press                          Burnout—a call for action   
-29             Article  Establishing community-based integrated care f...   
+  page_range                                   publication_name    scopus_id  \
+0     86-102                   Expert Systems with Applications  85037330308   
+1      81-93                   Expert Systems with Applications  85032512464   
+2        1-6    International Journal of Information Management  85029596678   
+3      60-69                     Preventive Veterinary Medicine  85037636361   
+4    133-140                                     Neurocomputing  85031031943   
+5    120-133                            Knowledge-Based Systems  85034955336   
+6      83-91  Expert Review of Pharmacoeconomics and Outcome...  85026547609   
+7    655-662            Lecture Notes in Electrical Engineering  85034022945   
+8    181-193  Communications in Computer and Information Sci...  85037536967   
+9    123-135      Advances in Intelligent Systems and Computing  85032702838   
 
-     volume  
-0   622-623  
-1        65  
-2        65  
-3        47  
-4        44  
-5        32  
-6       627  
-7        25  
-8        28  
-9        34  
-10       88  
-11       35  
-12        9  
-13       54  
-14       62  
-15      229  
-16      140  
-17       65  
-18      140  
-19      143  
-20      142  
-21      140  
-22        9  
-23     None  
-24        8  
-25     None  
-26     None  
-27     None  
-28     None  
-29       10  
+  subtype_description                                              title  \
+0             Article  Enhanced movie content similarity based on tex...   
+1             Article  GIST: A generative model with individual and s...   
+2             Article  Characterizing diabetes, diet, exercise, and o...   
+3             Article  Analysing the opinions of UK veterinarians on ...   
+4             Article     A Topic Drift Model for authorship attribution   
+5             Article  Improving user recommendation by extracting so...   
+6             Article  Cost-effectiveness of dolutegravir/abacavir/la...   
+7    Conference Paper  Tourism Information Search Based on Dynamic At...   
+8    Conference Paper  Multi-objective topic modeling for exploratory...   
+9    Conference Paper  Topic modeling for unsupervised concept extrac...   
+
+  volume  
+0     96  
+1     94  
+2     38  
+3    150  
+4    273  
+5    140  
+6     18  
+7    458  
+8    789  
+9    683  
+</code></pre>
+
+<hr />
+
+<h4 id="full-text-link">Full text link</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">full_text_link_arr</span> <span class="o">=</span> <span class="n">search_df</span><span class="o">.</span><span class="n">full_text</span><span class="o">.</span><span class="n">values</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">full_text_link_arr</span></code></pre></figure>
+
+<pre><code>array(['http://api.elsevier.com/content/article/eid/1-s2.0-S0957417417308059',
+'http://api.elsevier.com/content/article/eid/1-s2.0-S0957417417307200',
+'http://api.elsevier.com/content/article/eid/1-s2.0-S0268401217306126',
+'http://api.elsevier.com/content/article/eid/1-s2.0-S0167587717300223',
+'http://api.elsevier.com/content/article/eid/1-s2.0-S0925231217313759',
+'http://api.elsevier.com/content/article/eid/1-s2.0-S0950705117305002',
+None, None, None, None,
+'http://api.elsevier.com/content/article/eid/1-s2.0-S0957417417305948',
+None, None,
+'http://api.elsevier.com/content/article/eid/1-s2.0-S0020025516313706',
+'http://api.elsevier.com/content/article/eid/1-s2.0-S0190962217325847',
+None, None, None, None, None, None,
+'http://api.elsevier.com/content/article/eid/1-s2.0-S0167923617302130',
+None, None,
+'http://api.elsevier.com/content/article/eid/1-s2.0-S1532046417302605',
+'http://api.elsevier.com/content/article/eid/1-s2.0-S0743731517302174',
+None,
+'http://api.elsevier.com/content/article/eid/1-s2.0-S0278584617302130',
+None,
+'http://api.elsevier.com/content/article/eid/1-s2.0-S1386505617304185'], dtype=object)
+</code></pre>
+
+<p>For those with full text links, you are able to get all the text by calling <code class="highlighter-rouge">scopus.retrieve_full_text()</code>:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">full_text</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_full_text</span><span class="p">(</span><span class="n">full_text_link_arr</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">39500</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">full_text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">start</span><span class="o">+</span><span class="mi">10000</span><span class="p">]</span></code></pre></figure>
+
+<pre class="longoutput"><code>"between 1980 and 2014, with more than 1.9 billion adults considered as overweight and over 600 million adults considered as obese in 2014 (World Health Organization Fact Sheet, 2016). Since the 1970s, obesity has risen 37% affecting 25% of the U.S. adults (Flegal, Carroll, Kit, &amp; Ogden, 2012). Similar upward trends of obesity have been found in youth populations, with a 60% increase in preschool aged children between 1990 and 2010 (Harvard HSPH, 2017). Overweight and obesity are the fifth leading risk for global deaths according to the European Association for the Study of Obesity (World Health Organization Fact Sheet, 2016). Excess energy intake and inadequate energy expenditure both contribute to weight gain and diabetes (Hill, Wyatt, &amp; Peters, 2012; Wing et al., 2001).\n                  Obesity can be reduced through modifiable lifestyle behaviors such as diet and exercise (Wing et al., 2001). There are several comorbidities associated with being overweight or obese, such as diabetes (Kopelman, 2000). The prevalence of diabetes in adults has risen globally from 4.7% in 1980 to 8.5% in 2014. Current projections estimate that by 2050, 29 million Americans will be diagnosed with type 2 diabetes, which is a 165% increase from the 11 million diagnosed in 2002 (Boyle et al., 2001). Studies show that there are strong relations among diabetes, diet, exercise, and obesity (DDEO) (Association et al., 2004; Barnard et al., 2009; Hartz, Rupley, Kalkhoff, &amp; Rimm, 1983; Wing et al., 2001); however, the general public's perception of DDEO remains limited to survey-based studies (Tompson et al., 2012).\n                  The growth of social media has provided a research opportunity to track public behaviors, information, and opinions about common health issues. It is estimated that the number of social media users will increase from 2.34 billion in 2016 to 2.95 billion in 2020 (Statista, 2017). Twitter has 316 million users worldwide (Olanoff, 2015) providing a unique opportunity to understand users’ opinions with respect to the most common health issues (Mejova, Weber, &amp; Macy, 2015). Publicly available Twitter posts have facilitated data collection and leveraged the research at the intersection of public health and data science; thus, informing the research community of major opinions and topics of interest among the general population (Nasukawa &amp; Yi, 2003; Wiebe et al., 2003; Zabin &amp; Jefferies, 2008) that cannot otherwise be collected through traditional means of research (e.g., surveys, interviews, focus groups) (Eichstaedt et al., 2015; Wartell, 2015). Furthermore, analyzing Twitter data can help health organizations such as state health departments and large healthcare systems to provide health advice and track health opinions of their populations and provide effective health advice when needed (Mejova et al., 2015).\n                  Among computational methods to analyze tweets, computational linguistics is a well-known developed approach to gain insight into a population, track health issues, and discover new knowledge (Moreland-Russell, Tabak, Ruhr, &amp; Maier, 2014; Paul &amp; Dredze, 2011, 2012; Zhao et al., 2011). Twitter data has been used for a wide range of health and non-health related applications, such as stock market (Bollen, Mao, &amp; Zeng, 2011) and election analysis (Tumasjan, Sprenger, Sandner, &amp; Welpe, 2010). Some examples of Twitter data analysis for health-related topics include: flu (Culotta, 2010; Lampos &amp; Cristianini, 2010, 2012; Lampos, De Bie, &amp; Cristianini, 2010; Ritterman, Osborne, &amp; Klein, 2009; Szomszor, Kostkova, &amp; De Quincey, 2010), mental health (Coppersmith, Dredze, Harman, &amp; Hollingshead, 2015), Ebola (Lazard, Scheinfeld, Bernhardt, Wilcox, &amp; Suran, 2015; Odlum &amp; Yoon, 2015), Zika (Fu et al., 2016), medication use (Buntain &amp; Golbeck, 2015; Hanson, Cannon, Burton, &amp; Giraud-Carrier, 2013; Scanfeld, Scanfeld, &amp; Larson, 2010), diabetes (Harris, Mueller, Snider, &amp; Haire-Joshu, 2013), and weight loss and obesity (Dahl, Hales, &amp; Turner-McGrievy, 2016; Ghosh &amp; Guha, 2013; Harris et al., 2014; Turner-McGrievy &amp; Beets, 2015; Vickey, Ginis, &amp; Dabrowski, 2013).\n                  The previous Twitter studies have dealt with extracting common topics of one health issue discussed by the users to better understand common themes; however, this study utilizes an innovative approach to computationally analyze unstructured health related text data exchanged via Twitter to characterize health opinions regarding four common health issues, including diabetes, diet, exercise and obesity (DDEO) on a population level. This study identifies the characteristics of the most common health opinions with respect to DDEO and discloses public perception of the relationship among diabetes, diet, exercise and obesity. These common public opinions/topics and perceptions can be used by providers and public health agencies to better understand the common opinions of their population denominators in regard to DDEO, and reflect upon those opinions accordingly.\n               \n               \n                  2\n                  Methods\n                  Our approach uses semantic and linguistics analyses for disclosing health characteristics of opinions in tweets containing DDEO words. The present study included three phases: data collection, topic discovery, and topic-content analysis.\n                  \n                     2.1\n                     Data collection\n                     This phase collected tweets using Twitter's Application Programming Interfaces (API) (Twitter, 2017). Within the Twitter API, diabetes, diet, exercise, and obesity were selected as the related words (Wing et al., 2001) and the related health areas (Paul &amp; Dredze, 2011). Twitter's APIs provides both historic and real-time data collections. The latter method randomly collects 1% of publicly available tweets. This paper used the real-time method to randomly collect 10% of publicly available English tweets using several pre-defined DDEO-related queries (Table 1\n                        ) within a specific time frame. We used the queries to collect approximately 4.5 million related tweets between 06/01/2016 and 06/30/2016. The data will be available in the first author's website. Fig. 1\n                         shows a sample of collected tweets in this research.\n                  \n                  \n                     2.2\n                     Topic discovery\n                     To discover topics from the collected tweets, we used a topic modeling approach that fuzzy clusters the semantically related words such as assigning “diabetes”, “cancer”, and “influenza” into a topic that has an overall “disease” theme (Karami, 2015; Karami, Gangopadhyay, Zhou, &amp; Kharrazi, 2017). Topic modeling has a wide range of applications in health and medical domains such as predicting protein-protein relationships based on the literature knowledge (Asou &amp; Eguchi, 2008), discovering relevant clinical concepts and structures in patients’ health records (Arnold, El-Saden, Bui, &amp; Taira, 2010), and identifying patterns of clinical events in a cohort of brain cancer patients (Arnold &amp; Speier, 2012).\n                     Among topic models, Latent Dirichlet Allocation (LDA) (Blei, Ng, &amp; Jordan, 2003) is the most popular effective model (Lu, Mei, &amp; Zhai, 2011; Paul &amp; Dredze, 2011) as studies have shown that LDA is an effective computational linguistics model for discovering topics in a corpus (Hong &amp; Davison, 2010; Mcauliffe &amp; Blei, 2008). LDA assumes that a corpus contains topics such that each word in each document can be assigned to the topics with different degrees of membership (Karami &amp; Gangopadhyay, 2014; Karami, Gangopadhyay, Zhou, &amp; Kharrazi, 2015a, 2015b).\n                     Twitter users can post their opinions or share information about a subject to the public. Identifying the main topics of users’ tweets provides an interesting point of reference, but conceptualizing larger subtopics of millions of tweets can reveal valuable insight to users’ opinions. The topic discovery component of the study approach uses LDA to find main topics, themes, and opinions in the collected tweets.\n                     We used the Mallet implementation of LDA (Blei et al., 2003; McCallum, 2002) with its default settings to explore opinions in the tweets. Before identifying the opinions, two pre-processing steps were implemented: (1) using a standard list for removing stop words, that do not have semantic value for analysis (such as “the”); and, (2) finding the optimum number of topics. To determine a proper number of topics, log-likelihood estimation with 80% of tweets for training and 20% of tweets for testing was used to find the highest log-likelihood, as it is the optimum number of topics (Wallach, Murray, Salakhutdinov, &amp; Mimno, 2009). The highest log-likelihood was determined 425 topics.\n                  \n                  \n                     2.3\n                     Topic content analysis\n                     The topic content analysis component used an objective interpretation approach with a lexicon-based approach to analyze the content of topics. The lexicon-based approach uses dictionaries to disclose the semantic orientation of words in a topic. Linguistic Inquiry and Word Count (LIWC) is a linguistics analysis tool that reveals thoughts, feelings, personality, and motivations in a corpus (Karami &amp; Zhou, 2014a, 2014b, 2015). LIWC has accepted rate of sensitivity, specificity, and English proficiency measures (Golder &amp; Macy, 2011). LIWC has a health related dictionary that can help to find whether a topic contains words associated with health. In this analysis, we used LIWC to find health related topics.\n                  \n               \n               \n                  3\n                  Results\n                  Obesity and Diabetes showed the highest and the lowest number of tweets (51.7% and 8.0%). Diet and Exercise formed 23.7% and 16.6% of the tweets (Table 1).\n"
 </code></pre>
 
 <hr />
