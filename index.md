@@ -5,11 +5,13 @@ title: "Get Started"
 
 #### Last updated 02-06-2018
 
-### Reference
+### Citation and Acknowledgement
 
-Please cite our paper below when you use ___PyScopus___:
+If you use my code for your own research, it would be courteous of you to cite at least one of our papers below when you use ___PyScopus___:
 
-Zuo, Z., Zhao, K., & Eichmann, D. (2017). __The State and Evolution of U.S. iSchools – from Talent Acquisitions to Research Outcome__. *Journal of the Association for Information Science and Technology*, 68(5), 1266–1277. https://doi.org/10.1002/asi.23751
+[1] Zuo, Z., Zhao, K., & Eichmann, D. (2017). The State and Evolution of U.S. iSchools – from Talent Acquisitions to Research Outcome. Journal of the Association for Information Science and Technology, 68(5), 1266–1277. https://doi.org/10.1002/asi.23751
+
+[2] Zuo, Z., & Zhao, K. (2018). The more multidisciplinary the better?–The prevalence and interdisciplinarity of research collaborations in multidisciplinary institutions. Journal of Informetrics, 12(3), 736-756.
 
 ---
 
