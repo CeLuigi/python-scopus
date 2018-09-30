@@ -5,7 +5,7 @@ category: doc
 date: 2018-09-29 22:00:00
 ---
 
-Sometimes Scopus would mix up people with similar names. I recently come up with a not that difficult method to clean author publication profiles, which needs some manual work.
+Sometimes Scopus would mix up people with similar names. I recently come up with a not that difficult method to clean author publication profiles, which needs some manual work. The Jupyter notebook version is [here](https://github.com/zhiyzuo/python-scopus/blob/master/Disambiguition.ipynb)
 
 If you can think of a better way, please do let me know!
 
