@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width">
+
+        <title>PyScopus : Disambiguity Workaround</title>
+        <meta name="description" content="Python Wrapper for Scopus API">
+
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/python-scopus/css/syntax.css">
+        <link rel="stylesheet" href="/python-scopus/css/main.css">
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">-->
+        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=python&amp;skin=desert"></script>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+
+        <style>
+	    pre.prettyprint, code.prettyprint {
+		font-family: monospace; /* doesn't work why? */
+		font-size: 9pt; /* doesn't work */
+	    }
+            table.pure-table {
+		font-size: 9pt; /* doesn't work */
+            }
+        </style>
+    </head>
+    <body>
+
+        <a href="https://github.com/zhiyzuo/python-scopus"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+        <div class="container">
+            <div class="row">
+                <div id="header" class="col-sm-12">
+                    <h4><a class="brand" href="/python-scopus/">PyScopus</a>
+    <small>Python Wrapper for Scopus API</small>
+</h4>
+
+                </div>
+            </div>
+
+            <div class="row">
+                
+                
+                    <div id="navigation" class="col-sm-2">
+                        <ul class="nav nav-list">
+    <li><a href="/python-scopus/">Home</a></li>
+    
+        
+        
+
+        
+            
+                <li class="nav-header">Documentation</li>
+            
+            <li data-order=""><a href="/python-scopus/doc/disambiguition.html">Disambiguity Workaround</a></li>
+        
+            
+            <li data-order=""><a href="/python-scopus/doc/quick-start.html">Quick Start</a></li>
+        
+    
+        
+        
+
+        
+            
+                <li class="nav-header">Miscellaneous</li>
+            
+            <li data-order=""><a href="/python-scopus/misc/license.html">License</a></li>
+        
+    
+<!-- List additional links. It is recommended to add a divider
+    e.g.  first to break up the content. -->
+    <li class="divider"></li>
+</ul>
+
+                    </div>
+
+                    <div id="content" class="col-sm-10">
+                        <div class="page-header">
+    <h2>Disambiguity Workaround
+        
+    </h2>
+</div>
+
+<p>Sometimes Scopus would mix up people with similar names. I recently come up with a not that difficult method to clean author publication profiles, which needs some manual work.</p>
+
+<p>If you can think of a better way, please do let me know!</p>
+
+<hr />
+
+<pre class="prettyprint">&gt;&gt;&gt; import pyscopus
+&gt;&gt;&gt; pyscopus.__version__
+'1.0.0a1'
+&gt;&gt;&gt; from pyscopus import Scopus
+&gt;&gt;&gt; key = 'YOUR_OWN_APIKEY'
+&gt;&gt;&gt; scopus = Scopus(key)
+&gt;&gt;&gt; import utils
+</pre>
+
+<hr />
+
+<p>When I was collecting data for my own research, I found that <a href="http://web.media.mit.edu/~singhv/">Dr. Vivek K. Singh</a> has a very <a href="https://www.scopus.com/authid/detail.uri?authorId=7404651152">noisy profile in Scopus</a>. Let’s use this as an example.</p>
+
+<p>The basic idea is to match author-affiliation pair:</p>
+<ul>
+  <li>For all the paper found in the <em>mixed profile</em>
+    <ul>
+      <li>Find the focal author (in this case, Dr. Singh)</li>
+      <li>Look at his/her affiliation
+        <ul>
+          <li>Keep this paper if the affiliation is indeed where he/she is</li>
+          <li>If not, discard the paper</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>For Dr. Singh, I manually obtained his affiliation ids by searching through <a href="https://www.scopus.com/search/form.uri?display=affiliationLookup">Scopus affiliation search</a>. Upon obtaining that, create a dictionary containing <em>name (first/last)</em>, <em>affiliation name</em>, and <em>a list of affiliation ids</em>. Author and affiliation names would be used to search for this author. The list of affiliation ids would be used for cleaning papers:</p>
+
+<ul>
+  <li>UC Irvine <code class="highlighter-rouge">60007278</code></li>
+  <li>MIT <code class="highlighter-rouge">60022195</code></li>
+  <li>Rutgers <code class="highlighter-rouge">60030623</code></li>
+</ul>
+
+<pre class="prettyprint">
+&gt;&gt;&gt; d = {'authfirst': 'Vivek', 'authlastname': 'Singh', 'affiliation': 'Rutgers',
+     'affil_id_list': ['60030623', '60022195', '60007278']
+    }
+&gt;&gt;&gt; d
+{'authfirst': 'Vivek',
+ 'authlastname': 'Singh',
+ 'affiliation': 'Rutgers',
+ 'affil_id_list': ['60030623', '60022195', '60007278']}
+&gt;&gt;&gt; query = "AUTHLASTNAME({}) and AUTHFIRST({}) and AFFIL({})".format(d['authlastname'], d['authfirst'], d['affiliation'])
+&gt;&gt;&gt; author_search_df = scopus.search_author(query)
+&gt;&gt;&gt; author_search_df
+</pre>
+
+<div>
+<table class="pure-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>author_id</th>
+      <th>name</th>
+      <th>document_count</th>
+      <th>affiliation</th>
+      <th>affiliation_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7404651152</td>
+      <td>Vivek Kumar N. Singh</td>
+      <td>490</td>
+      <td>Banaras Hindu University</td>
+      <td>60008721</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><br /></p>
+
+<p>Sometimes we would obtain a list of author profiles for each author. In this case, we only have one and it is clear that the author profile is highly noisy.</p>
+
+<p>In the following step, I would use the helper functions in <code class="highlighter-rouge">utils</code> to screen each paper by this <code class="highlighter-rouge">author_id</code></p>
+
+<pre class="prettyprint">
+&gt;&gt;&gt; author_id = '7404651152'
+&gt;&gt;&gt; author_id, d['affil_id_list']
+('7404651152', ['60030623', '60022195', '60007278'])
+</pre>
+
+<p>The filtering process may take a while, depending on how many documents are mixd up.</p>
+
+<pre class="prettyprint">
+&gt;&gt;&gt; filterd_pub_df = utils.check_pub_validity(scopus, author_id, d['affil_id_list'], apikey)
+&gt;&gt;&gt; filterd_pub_df.shape[0], filterd_pub_df.scopus_id.unique().size, filterd_pub_df.scopus_id.isnull().sum()
+(134, 134, 0)
+</pre>
+
+<p>Obviously, the number of papers is highly reduced. We can now check a random subset to see if the filtered papers make sense for this author.</p>
+
+<pre class="prettyprint">
+&gt;&gt;&gt; filterd_pub_df.iloc[utils.pd.np.random.randint(0, high=134, size=20)][['title', 'publication_name']]
+</pre>
+
+<div>
+<table class="pure-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+      <th>publication_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>117</th>
+      <td>Effects of high-energy irradiation on silicon ...</td>
+      <td>Optics InfoBase Conference Papers</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>"They basically like destroyed the school one ...</td>
+      <td>Proceedings of the ACM Conference on Computer ...</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>Situation recognition from multimodal data</td>
+      <td>MM 2016 - Proceedings of the 2016 ACM Multimed...</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>On-chip mid-infrared gas detection using chalc...</td>
+      <td>Applied Physics Letters</td>
+    </tr>
+    <tr>
+      <th>212</th>
+      <td>Mid-infrared As&lt;inf&gt;2&lt;/inf&gt;Se&lt;inf&gt;3&lt;/inf&gt; chal...</td>
+      <td>IEEE International Conference on Group IV Phot...</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>Geo-intelligence and visualization through big...</td>
+      <td>Geo-Intelligence and Visualization through Big...</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td>Effects of high-energy irradiation on silicon ...</td>
+      <td>Optics InfoBase Conference Papers</td>
+    </tr>
+    <tr>
+      <th>206</th>
+      <td>Low loss mid-infrared silicon waveguides by us...</td>
+      <td>Frontiers in Optics, FIO 2012</td>
+    </tr>
+    <tr>
+      <th>151</th>
+      <td>Predicting spending behavior using socio-mobil...</td>
+      <td>Proceedings - SocialCom/PASSAT/BigData/EconCom...</td>
+    </tr>
+    <tr>
+      <th>154</th>
+      <td>Generation of two-cycle pulses and octave-span...</td>
+      <td>Optics Letters</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>Predicting privacy attitudes using phone metadata</td>
+      <td>Lecture Notes in Computer Science (including s...</td>
+    </tr>
+    <tr>
+      <th>259</th>
+      <td>Novel designs for on-chip mid-infrared detecto...</td>
+      <td>Optics InfoBase Conference Papers</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td>Engineering spectral variation of FSR by tailo...</td>
+      <td>Integrated Photonics Research, Silicon and Nan...</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Toward harmonizing self-reported and logged so...</td>
+      <td>Conference on Human Factors in Computing Syste...</td>
+    </tr>
+    <tr>
+      <th>316</th>
+      <td>Adversary aware surveillance systems</td>
+      <td>IEEE Transactions on Information Forensics and...</td>
+    </tr>
+    <tr>
+      <th>194</th>
+      <td>Situation recognition: An evolving problem for...</td>
+      <td>MM 2012 - Proceedings of the 20th ACM Internat...</td>
+    </tr>
+    <tr>
+      <th>209</th>
+      <td>Trimming of athermal silicon resonators</td>
+      <td>Integrated Photonics Research, Silicon and Nan...</td>
+    </tr>
+    <tr>
+      <th>116</th>
+      <td>Nonreciprocal racetrack resonator based on vac...</td>
+      <td>Optics Express</td>
+    </tr>
+    <tr>
+      <th>105</th>
+      <td>Assessing personality using demographic inform...</td>
+      <td>ACM International Conference Proceeding Series</td>
+    </tr>
+    <tr>
+      <th>265</th>
+      <td>Visible light trimming of coupled ring-resonat...</td>
+      <td>2011 Conference on Lasers and Electro-Optics E...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><br /></p>
+
+<p>However, there may still be noise in it (e.g., papers published in optics/photonics venues). We can manually exclude those as well:</p>
+
+<pre class="prettyprint">
+&gt;&gt;&gt; filterd_pub_df = filterd_pub_df.query("not publication_name.str.lower().str.contains('optic')")
+&gt;&gt;&gt; filterd_pub_df = filterd_pub_df.query("not publication_name.str.lower().str.contains('photonic')")
+&gt;&gt;&gt; filterd_pub_df = filterd_pub_df.query("not publication_name.str.lower().str.contains('nano')")
+&gt;&gt;&gt; filterd_pub_df = filterd_pub_df.query("not publication_name.str.lower().str.contains('quantum')")
+&gt;&gt;&gt; filterd_pub_df = filterd_pub_df.query("not publication_name.str.lower().str.contains('sensor')")
+&gt;&gt;&gt; filterd_pub_df = filterd_pub_df.query("not publication_name.str.lower().str.contains('cleo')")
+&gt;&gt;&gt; filterd_pub_df = filterd_pub_df.query("not publication_name.str.lower().str.contains('materials')")
+&gt;&gt;&gt; filterd_pub_df = filterd_pub_df.query("not publication_name.str.lower().str.contains('physics')")
+&gt;&gt;&gt; filterd_pub_df = filterd_pub_df.query("not publication_name.str.lower().str.contains('chip')")
+&gt;&gt;&gt; filterd_pub_df.shape
+(59, 16)
+</pre>
+
+<p>And let’s check again</p>
+
+<pre class="prettyprint">
+&gt;&gt;&gt; filterd_pub_df.iloc[utils.pd.np.random.randint(0, high=59, size=20)][['title', 'publication_name']]
+</pre>
+
+<div>
+<table class="pure-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+      <th>publication_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>94</th>
+      <td>Physical-Cyber-Social Computing: Looking Back,...</td>
+      <td>IEEE Internet Computing</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>Situation recognition from multimodal data</td>
+      <td>MM 2016 - Proceedings of the 2016 ACM Multimed...</td>
+    </tr>
+    <tr>
+      <th>151</th>
+      <td>Predicting spending behavior using socio-mobil...</td>
+      <td>Proceedings - SocialCom/PASSAT/BigData/EconCom...</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Toward multimodal cyberbullying detection</td>
+      <td>Conference on Human Factors in Computing Syste...</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>If it looks like a spammer and behaves like a ...</td>
+      <td>International Journal of Information Security</td>
+    </tr>
+    <tr>
+      <th>134</th>
+      <td>Cyber bullying detection using social and text...</td>
+      <td>SAM 2014 - Proceedings of the 3rd Internationa...</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>From sensors to sense-making: Opportunities an...</td>
+      <td>Proceedings of the Association for Information...</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>From sensors to sense-making: Opportunities an...</td>
+      <td>Proceedings of the Association for Information...</td>
+    </tr>
+    <tr>
+      <th>297</th>
+      <td>Structural analysis of the emerging event-web</td>
+      <td>Proceedings of the 19th International Conferen...</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Using cognitive dissonance theory to understan...</td>
+      <td>Proceedings of the Association for Information...</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>Geo-intelligence and visualization through big...</td>
+      <td>Geo-Intelligence and Visualization through Big...</td>
+    </tr>
+    <tr>
+      <th>87</th>
+      <td>Preface</td>
+      <td>Geo-Intelligence and Visualization through Big...</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>"They basically like destroyed the school one ...</td>
+      <td>Proceedings of the ACM Conference on Computer ...</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>EventShop: Recognizing situations in web data ...</td>
+      <td>WWW 2013 Companion - Proceedings of the 22nd I...</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>Predicting privacy attitudes using phone metadata</td>
+      <td>Lecture Notes in Computer Science (including s...</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Introduction to the special issue on advances ...</td>
+      <td>ACM Transactions on Internet Technology</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>Situation recognition using eventShop</td>
+      <td>Situation Recognition Using EventShop</td>
+    </tr>
+    <tr>
+      <th>301</th>
+      <td>From microblogs to social images: Event analyt...</td>
+      <td>MIR 2010 - Proceedings of the 2010 ACM SIGMM I...</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Toward harmonizing self-reported and logged so...</td>
+      <td>Conference on Human Factors in Computing Syste...</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>Physical-Cyber-Social Computing: Looking Back,...</td>
+      <td>IEEE Internet Computing</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><br /></p>
+
+<p>Now it is much better and we can use this cleaned paper list for this focal author.</p>
+
+
+                    </div>
+                
+            </div>
+
+            
+
+            <div class="row">
+                <div id="footer" class="col-sm-12">
+                    Documentation for <a href="https://github.com/zhiyzuo/python-scopus">PyScopus</a>
+
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function orderNav() {
+                var list,
+                    section,
+                    header,
+                    sections = [],
+                    lists = {},
+                    headers = {};
+
+                var navUl = document.querySelectorAll('#navigation ul')[0],
+                    navLis = document.querySelectorAll('#navigation ul li');
+
+                if (!navUl) return;
+
+                for (var i = 0; i < navLis.length; i++) {
+                    var order, li = navLis[i];
+
+                    if (li.classList.contains('nav-header')) {
+                        section = li.textContent || li.innerText;
+                        sections.push(section);
+                        headers[section] = li;
+                        continue;
+                    }
+
+                    if (!lists[section]) {
+                        lists[section] = [];
+                    }
+
+                    order = parseFloat(li.getAttribute('data-order'))
+                    lists[section].push([order, li]);
+                }
+
+                for (var i = 0; i < sections.length; i++) {
+                    section = sections[i];
+                    list = lists[section].sort(function(a, b) {
+                        return a[0] - b[0];
+                    });
+
+                    if (header = headers[section]) {
+                        navUl.appendChild(header);
+                    }
+                    for (var j = 0; j < list.length; j++) {
+                        navUl.appendChild(list[j][1]);
+                    }
+                }
+            }
+
+            if (document.querySelectorAll) orderNav();
+        </script>
+        
+    </body>
+</html>

@@ -3,7 +3,11 @@ layout: default
 title: "Get Started"
 ---
 
-#### Last updated 02-06-2018
+#### Last updated 09-29-2018
+
+### NEW!!!
+I just upload my workaround for cleaning mixed author profile. See [___Diambiguity Workaround___](doc/disambiguition.html) for more details!
+
 
 ### Citation and Acknowledgement
 

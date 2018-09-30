@@ -11,6 +11,19 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="/python-scopus/css/syntax.css">
         <link rel="stylesheet" href="/python-scopus/css/main.css">
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">-->
+        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=python&amp;skin=desert"></script>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+
+        <style>
+	    pre.prettyprint, code.prettyprint {
+		font-family: monospace; /* doesn't work why? */
+		font-size: 9pt; /* doesn't work */
+	    }
+            table.pure-table {
+		font-size: 9pt; /* doesn't work */
+            }
+        </style>
     </head>
     <body>
 
@@ -39,6 +52,9 @@
         
             
                 <li class="nav-header">Documentation</li>
+            
+            <li data-order=""><a href="/python-scopus/doc/disambiguition.html">Disambiguity Workaround</a></li>
+        
             
             <li data-order=""><a href="/python-scopus/doc/quick-start.html">Quick Start</a></li>
         
@@ -76,18 +92,19 @@
 
 <p>Import <code class="highlighter-rouge">Scopus</code> class and initialize with your own <strong>API Key</strong></p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pyscopus</span> <span class="kn">import</span> <span class="n">Scopus</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">key</span> <span class="o">=</span> <span class="s">'xxxxxxxxxx'</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">scopus</span> <span class="o">=</span> <span class="n">Scopus</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></code></pre></figure>
+<pre class="prettyprint">
+&gt;&gt;&gt; from pyscopus import Scopus
+&gt;&gt;&gt; key = 'YOUR_OWN_APIKEY'
+&gt;&gt;&gt; scopus = Scopus(key)
+</pre>
 
 <hr />
 
 <h4 id="general-search">General Search</h4>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">search_df</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">"KEY(interdisciplinary collaboration)"</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">search_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span></code></pre></figure>
-
-<pre class="longoutput"><code>affiliation aggregation_type  \
+<pre class="prettyprint" style="height: 40em; overflow:scroll">
+&gt;&gt;&gt; search_df = scopus.search("KEY(interdisciplinary collaboration)", count=30)
+&gt;&gt;&gt; print(search_df.head(10))
+affiliation aggregation_type  \
 0  [{'name': 'Institute of Informatics and Teleco...          Journal   
 1  [{'name': 'University of Jinan', 'city': 'Jina...          Journal   
 2  [{'name': 'University of South Carolina', 'cit...          Journal   
@@ -170,16 +187,16 @@
 7    458  
 8    789  
 9    683  
-</code></pre>
+</pre>
 
 <hr />
 
 <h4 id="full-text-link">Full text link</h4>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">full_text_link_arr</span> <span class="o">=</span> <span class="n">search_df</span><span class="o">.</span><span class="n">full_text</span><span class="o">.</span><span class="n">values</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">full_text_link_arr</span></code></pre></figure>
-
-<pre><code>array(['http://api.elsevier.com/content/article/eid/1-s2.0-S0957417417308059',
+<pre class="prettyprint">
+&gt;&gt;&gt; full_text_link_arr = search_df.full_text.values
+&gt;&gt;&gt; full_text_link_arr
+array(['http://api.elsevier.com/content/article/eid/1-s2.0-S0957417417308059',
 'http://api.elsevier.com/content/article/eid/1-s2.0-S0957417417307200',
 'http://api.elsevier.com/content/article/eid/1-s2.0-S0268401217306126',
 'http://api.elsevier.com/content/article/eid/1-s2.0-S0167587717300223',
@@ -198,39 +215,39 @@ None, None,
 None,
 'http://api.elsevier.com/content/article/eid/1-s2.0-S0278584617302130',
 None,
-'http://api.elsevier.com/content/article/eid/1-s2.0-S1386505617304185'], dtype=object)
-</code></pre>
+'http://api.elsevier.com/content/article/eid/1-s2.0-S1386505617304185'], dtype=object)</pre>
 
 <p>For those with full text links, you are able to get all the text by calling <code class="highlighter-rouge">scopus.retrieve_full_text()</code>:</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">full_text</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_full_text</span><span class="p">(</span><span class="n">full_text_link_arr</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">39500</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">full_text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">start</span><span class="o">+</span><span class="mi">10000</span><span class="p">]</span></code></pre></figure>
-
-<pre class="longoutput"><code>"between 1980 and 2014, with more than 1.9 billion adults considered as overweight and over 600 million adults considered as obese in 2014 (World Health Organization Fact Sheet, 2016). Since the 1970s, obesity has risen 37% affecting 25% of the U.S. adults (Flegal, Carroll, Kit, &amp; Ogden, 2012). Similar upward trends of obesity have been found in youth populations, with a 60% increase in preschool aged children between 1990 and 2010 (Harvard HSPH, 2017). Overweight and obesity are the fifth leading risk for global deaths according to the European Association for the Study of Obesity (World Health Organization Fact Sheet, 2016). Excess energy intake and inadequate energy expenditure both contribute to weight gain and diabetes (Hill, Wyatt, &amp; Peters, 2012; Wing et al., 2001).\n                  Obesity can be reduced through modifiable lifestyle behaviors such as diet and exercise (Wing et al., 2001). There are several comorbidities associated with being overweight or obese, such as diabetes (Kopelman, 2000). The prevalence of diabetes in adults has risen globally from 4.7% in 1980 to 8.5% in 2014. Current projections estimate that by 2050, 29 million Americans will be diagnosed with type 2 diabetes, which is a 165% increase from the 11 million diagnosed in 2002 (Boyle et al., 2001). Studies show that there are strong relations among diabetes, diet, exercise, and obesity (DDEO) (Association et al., 2004; Barnard et al., 2009; Hartz, Rupley, Kalkhoff, &amp; Rimm, 1983; Wing et al., 2001); however, the general public's perception of DDEO remains limited to survey-based studies (Tompson et al., 2012).\n                  The growth of social media has provided a research opportunity to track public behaviors, information, and opinions about common health issues. It is estimated that the number of social media users will increase from 2.34 billion in 2016 to 2.95 billion in 2020 (Statista, 2017). Twitter has 316 million users worldwide (Olanoff, 2015) providing a unique opportunity to understand users’ opinions with respect to the most common health issues (Mejova, Weber, &amp; Macy, 2015). Publicly available Twitter posts have facilitated data collection and leveraged the research at the intersection of public health and data science; thus, informing the research community of major opinions and topics of interest among the general population (Nasukawa &amp; Yi, 2003; Wiebe et al., 2003; Zabin &amp; Jefferies, 2008) that cannot otherwise be collected through traditional means of research (e.g., surveys, interviews, focus groups) (Eichstaedt et al., 2015; Wartell, 2015). Furthermore, analyzing Twitter data can help health organizations such as state health departments and large healthcare systems to provide health advice and track health opinions of their populations and provide effective health advice when needed (Mejova et al., 2015).\n                  Among computational methods to analyze tweets, computational linguistics is a well-known developed approach to gain insight into a population, track health issues, and discover new knowledge (Moreland-Russell, Tabak, Ruhr, &amp; Maier, 2014; Paul &amp; Dredze, 2011, 2012; Zhao et al., 2011). Twitter data has been used for a wide range of health and non-health related applications, such as stock market (Bollen, Mao, &amp; Zeng, 2011) and election analysis (Tumasjan, Sprenger, Sandner, &amp; Welpe, 2010). Some examples of Twitter data analysis for health-related topics include: flu (Culotta, 2010; Lampos &amp; Cristianini, 2010, 2012; Lampos, De Bie, &amp; Cristianini, 2010; Ritterman, Osborne, &amp; Klein, 2009; Szomszor, Kostkova, &amp; De Quincey, 2010), mental health (Coppersmith, Dredze, Harman, &amp; Hollingshead, 2015), Ebola (Lazard, Scheinfeld, Bernhardt, Wilcox, &amp; Suran, 2015; Odlum &amp; Yoon, 2015), Zika (Fu et al., 2016), medication use (Buntain &amp; Golbeck, 2015; Hanson, Cannon, Burton, &amp; Giraud-Carrier, 2013; Scanfeld, Scanfeld, &amp; Larson, 2010), diabetes (Harris, Mueller, Snider, &amp; Haire-Joshu, 2013), and weight loss and obesity (Dahl, Hales, &amp; Turner-McGrievy, 2016; Ghosh &amp; Guha, 2013; Harris et al., 2014; Turner-McGrievy &amp; Beets, 2015; Vickey, Ginis, &amp; Dabrowski, 2013).\n                  The previous Twitter studies have dealt with extracting common topics of one health issue discussed by the users to better understand common themes; however, this study utilizes an innovative approach to computationally analyze unstructured health related text data exchanged via Twitter to characterize health opinions regarding four common health issues, including diabetes, diet, exercise and obesity (DDEO) on a population level. This study identifies the characteristics of the most common health opinions with respect to DDEO and discloses public perception of the relationship among diabetes, diet, exercise and obesity. These common public opinions/topics and perceptions can be used by providers and public health agencies to better understand the common opinions of their population denominators in regard to DDEO, and reflect upon those opinions accordingly.\n               \n               \n                  2\n                  Methods\n                  Our approach uses semantic and linguistics analyses for disclosing health characteristics of opinions in tweets containing DDEO words. The present study included three phases: data collection, topic discovery, and topic-content analysis.\n                  \n                     2.1\n                     Data collection\n                     This phase collected tweets using Twitter's Application Programming Interfaces (API) (Twitter, 2017). Within the Twitter API, diabetes, diet, exercise, and obesity were selected as the related words (Wing et al., 2001) and the related health areas (Paul &amp; Dredze, 2011). Twitter's APIs provides both historic and real-time data collections. The latter method randomly collects 1% of publicly available tweets. This paper used the real-time method to randomly collect 10% of publicly available English tweets using several pre-defined DDEO-related queries (Table 1\n                        ) within a specific time frame. We used the queries to collect approximately 4.5 million related tweets between 06/01/2016 and 06/30/2016. The data will be available in the first author's website. Fig. 1\n                         shows a sample of collected tweets in this research.\n                  \n                  \n                     2.2\n                     Topic discovery\n                     To discover topics from the collected tweets, we used a topic modeling approach that fuzzy clusters the semantically related words such as assigning “diabetes”, “cancer”, and “influenza” into a topic that has an overall “disease” theme (Karami, 2015; Karami, Gangopadhyay, Zhou, &amp; Kharrazi, 2017). Topic modeling has a wide range of applications in health and medical domains such as predicting protein-protein relationships based on the literature knowledge (Asou &amp; Eguchi, 2008), discovering relevant clinical concepts and structures in patients’ health records (Arnold, El-Saden, Bui, &amp; Taira, 2010), and identifying patterns of clinical events in a cohort of brain cancer patients (Arnold &amp; Speier, 2012).\n                     Among topic models, Latent Dirichlet Allocation (LDA) (Blei, Ng, &amp; Jordan, 2003) is the most popular effective model (Lu, Mei, &amp; Zhai, 2011; Paul &amp; Dredze, 2011) as studies have shown that LDA is an effective computational linguistics model for discovering topics in a corpus (Hong &amp; Davison, 2010; Mcauliffe &amp; Blei, 2008). LDA assumes that a corpus contains topics such that each word in each document can be assigned to the topics with different degrees of membership (Karami &amp; Gangopadhyay, 2014; Karami, Gangopadhyay, Zhou, &amp; Kharrazi, 2015a, 2015b).\n                     Twitter users can post their opinions or share information about a subject to the public. Identifying the main topics of users’ tweets provides an interesting point of reference, but conceptualizing larger subtopics of millions of tweets can reveal valuable insight to users’ opinions. The topic discovery component of the study approach uses LDA to find main topics, themes, and opinions in the collected tweets.\n                     We used the Mallet implementation of LDA (Blei et al., 2003; McCallum, 2002) with its default settings to explore opinions in the tweets. Before identifying the opinions, two pre-processing steps were implemented: (1) using a standard list for removing stop words, that do not have semantic value for analysis (such as “the”); and, (2) finding the optimum number of topics. To determine a proper number of topics, log-likelihood estimation with 80% of tweets for training and 20% of tweets for testing was used to find the highest log-likelihood, as it is the optimum number of topics (Wallach, Murray, Salakhutdinov, &amp; Mimno, 2009). The highest log-likelihood was determined 425 topics.\n                  \n                  \n                     2.3\n                     Topic content analysis\n                     The topic content analysis component used an objective interpretation approach with a lexicon-based approach to analyze the content of topics. The lexicon-based approach uses dictionaries to disclose the semantic orientation of words in a topic. Linguistic Inquiry and Word Count (LIWC) is a linguistics analysis tool that reveals thoughts, feelings, personality, and motivations in a corpus (Karami &amp; Zhou, 2014a, 2014b, 2015). LIWC has accepted rate of sensitivity, specificity, and English proficiency measures (Golder &amp; Macy, 2011). LIWC has a health related dictionary that can help to find whether a topic contains words associated with health. In this analysis, we used LIWC to find health related topics.\n                  \n               \n               \n                  3\n                  Results\n                  Obesity and Diabetes showed the highest and the lowest number of tweets (51.7% and 8.0%). Diet and Exercise formed 23.7% and 16.6% of the tweets (Table 1).\n"
-</code></pre>
+<pre class="prettyprint">
+&gt;&gt;&gt; full_text = scopus.retrieve_full_text(full_text_link_arr[2])
+&gt;&gt;&gt; start = 39500
+&gt;&gt;&gt; full_text[start:start+10000]
+"between 1980 and 2014, with more than 1.9 billion adults considered as overweight and over 600 million adults considered as obese in 2014 (World Health Organization Fact Sheet, 2016). Since the 1970s, obesity has risen 37% affecting 25% of the U.S. adults (Flegal, Carroll, Kit, &amp; Ogden, 2012). Similar upward trends of obesity have been found in youth populations, with a 60% increase in preschool aged children between 1990 and 2010 (Harvard HSPH, 2017). Overweight and obesity are the fifth leading risk for global deaths according to the European Association for the Study of Obesity (World Health Organization Fact Sheet, 2016). Excess energy intake and inadequate energy expenditure both contribute to weight gain and diabetes (Hill, Wyatt, &amp; Peters, 2012; Wing et al., 2001).\n                  Obesity can be reduced through modifiable lifestyle behaviors such as diet and exercise (Wing et al., 2001). There are several comorbidities associated with being overweight or obese, such as diabetes (Kopelman, 2000). The prevalence of diabetes in adults has risen globally from 4.7% in 1980 to 8.5% in 2014. Current projections estimate that by 2050, 29 million Americans will be diagnosed with type 2 diabetes, which is a 165% increase from the 11 million diagnosed in 2002 (Boyle et al., 2001). Studies show that there are strong relations among diabetes, diet, exercise, and obesity (DDEO) (Association et al., 2004; Barnard et al., 2009; Hartz, Rupley, Kalkhoff, &amp; Rimm, 1983; Wing et al., 2001); however, the general public's perception of DDEO remains limited to survey-based studies (Tompson et al., 2012).\n                  The growth of social media has provided a research opportunity to track public behaviors, information, and opinions about common health issues. It is estimated that the number of social media users will increase from 2.34 billion in 2016 to 2.95 billion in 2020 (Statista, 2017). Twitter has 316 million users worldwide (Olanoff, 2015) providing a unique opportunity to understand users’ opinions with respect to the most common health issues (Mejova, Weber, &amp; Macy, 2015). Publicly available Twitter posts have facilitated data collection and leveraged the research at the intersection of public health and data science; thus, informing the research community of major opinions and topics of interest among the general population (Nasukawa &amp; Yi, 2003; Wiebe et al., 2003; Zabin &amp; Jefferies, 2008) that cannot otherwise be collected through traditional means of research (e.g., surveys, interviews, focus groups) (Eichstaedt et al., 2015; Wartell, 2015). Furthermore, analyzing Twitter data can help health organizations such as state health departments and large healthcare systems to provide health advice and track health opinions of their populations and provide effective health advice when needed (Mejova et al., 2015).\n                  Among computational methods to analyze tweets, computational linguistics is a well-known developed approach to gain insight into a population, track health issues, and discover new knowledge (Moreland-Russell, Tabak, Ruhr, &amp; Maier, 2014; Paul &amp; Dredze, 2011, 2012; Zhao et al., 2011). Twitter data has been used for a wide range of health and non-health related applications, such as stock market (Bollen, Mao, &amp; Zeng, 2011) and election analysis (Tumasjan, Sprenger, Sandner, &amp; Welpe, 2010). Some examples of Twitter data analysis for health-related topics include: flu (Culotta, 2010; Lampos &amp; Cristianini, 2010, 2012; Lampos, De Bie, &amp; Cristianini, 2010; Ritterman, Osborne, &amp; Klein, 2009; Szomszor, Kostkova, &amp; De Quincey, 2010), mental health (Coppersmith, Dredze, Harman, &amp; Hollingshead, 2015), Ebola (Lazard, Scheinfeld, Bernhardt, Wilcox, &amp; Suran, 2015; Odlum &amp; Yoon, 2015), Zika (Fu et al., 2016), medication use (Buntain &amp; Golbeck, 2015; Hanson, Cannon, Burton, &amp; Giraud-Carrier, 2013; Scanfeld, Scanfeld, &amp; Larson, 2010), diabetes (Harris, Mueller, Snider, &amp; Haire-Joshu, 2013), and weight loss and obesity (Dahl, Hales, &amp; Turner-McGrievy, 2016; Ghosh &amp; Guha, 2013; Harris et al., 2014; Turner-McGrievy &amp; Beets, 2015; Vickey, Ginis, &amp; Dabrowski, 2013).\n                  The previous Twitter studies have dealt with extracting common topics of one health issue discussed by the users to better understand common themes; however, this study utilizes an innovative approach to computationally analyze unstructured health related text data exchanged via Twitter to characterize health opinions regarding four common health issues, including diabetes, diet, exercise and obesity (DDEO) on a population level. This study identifies the characteristics of the most common health opinions with respect to DDEO and discloses public perception of the relationship among diabetes, diet, exercise and obesity. These common public opinions/topics and perceptions can be used by providers and public health agencies to better understand the common opinions of their population denominators in regard to DDEO, and reflect upon those opinions accordingly.\n               \n               \n                  2\n                  Methods\n                  Our approach uses semantic and linguistics analyses for disclosing health characteristics of opinions in tweets containing DDEO words. The present study included three phases: data collection, topic discovery, and topic-content analysis.\n                  \n                     2.1\n                     Data collection\n                     This phase collected tweets using Twitter's Application Programming Interfaces (API) (Twitter, 2017). Within the Twitter API, diabetes, diet, exercise, and obesity were selected as the related words (Wing et al., 2001) and the related health areas (Paul &amp; Dredze, 2011). Twitter's APIs provides both historic and real-time data collections. The latter method randomly collects 1% of publicly available tweets. This paper used the real-time method to randomly collect 10% of publicly available English tweets using several pre-defined DDEO-related queries (Table 1\n                        ) within a specific time frame. We used the queries to collect approximately 4.5 million related tweets between 06/01/2016 and 06/30/2016. The data will be available in the first author's website. Fig. 1\n                         shows a sample of collected tweets in this research.\n                  \n                  \n                     2.2\n                     Topic discovery\n                     To discover topics from the collected tweets, we used a topic modeling approach that fuzzy clusters the semantically related words such as assigning “diabetes”, “cancer”, and “influenza” into a topic that has an overall “disease” theme (Karami, 2015; Karami, Gangopadhyay, Zhou, &amp; Kharrazi, 2017). Topic modeling has a wide range of applications in health and medical domains such as predicting protein-protein relationships based on the literature knowledge (Asou &amp; Eguchi, 2008), discovering relevant clinical concepts and structures in patients’ health records (Arnold, El-Saden, Bui, &amp; Taira, 2010), and identifying patterns of clinical events in a cohort of brain cancer patients (Arnold &amp; Speier, 2012).\n                     Among topic models, Latent Dirichlet Allocation (LDA) (Blei, Ng, &amp; Jordan, 2003) is the most popular effective model (Lu, Mei, &amp; Zhai, 2011; Paul &amp; Dredze, 2011) as studies have shown that LDA is an effective computational linguistics model for discovering topics in a corpus (Hong &amp; Davison, 2010; Mcauliffe &amp; Blei, 2008). LDA assumes that a corpus contains topics such that each word in each document can be assigned to the topics with different degrees of membership (Karami &amp; Gangopadhyay, 2014; Karami, Gangopadhyay, Zhou, &amp; Kharrazi, 2015a, 2015b).\n                     Twitter users can post their opinions or share information about a subject to the public. Identifying the main topics of users’ tweets provides an interesting point of reference, but conceptualizing larger subtopics of millions of tweets can reveal valuable insight to users’ opinions. The topic discovery component of the study approach uses LDA to find main topics, themes, and opinions in the collected tweets.\n                     We used the Mallet implementation of LDA (Blei et al., 2003; McCallum, 2002) with its default settings to explore opinions in the tweets. Before identifying the opinions, two pre-processing steps were implemented: (1) using a standard list for removing stop words, that do not have semantic value for analysis (such as “the”); and, (2) finding the optimum number of topics. To determine a proper number of topics, log-likelihood estimation with 80% of tweets for training and 20% of tweets for testing was used to find the highest log-likelihood, as it is the optimum number of topics (Wallach, Murray, Salakhutdinov, &amp; Mimno, 2009). The highest log-likelihood was determined 425 topics.\n                  \n                  \n                     2.3\n                     Topic content analysis\n                     The topic content analysis component used an objective interpretation approach with a lexicon-based approach to analyze the content of topics. The lexicon-based approach uses dictionaries to disclose the semantic orientation of words in a topic. Linguistic Inquiry and Word Count (LIWC) is a linguistics analysis tool that reveals thoughts, feelings, personality, and motivations in a corpus (Karami &amp; Zhou, 2014a, 2014b, 2015). LIWC has accepted rate of sensitivity, specificity, and English proficiency measures (Golder &amp; Macy, 2011). LIWC has a health related dictionary that can help to find whether a topic contains words associated with health. In this analysis, we used LIWC to find health related topics.\n                  \n               \n               \n                  3\n                  Results\n                  Obesity and Diabetes showed the highest and the lowest number of tweets (51.7% and 8.0%). Diet and Exercise formed 23.7% and 16.6% of the tweets (Table 1).\n"
+</pre>
 
 <hr />
 
 <h4 id="search-for-a-specific-author">Search for a specific author</h4>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">author_result_df</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search_author</span><span class="p">(</span><span class="s">"AUTHLASTNAME(Zhao) and AUTHFIRST(Kang) and AFFIL(Iowa)"</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">author_result_df</span><span class="p">)</span></code></pre></figure>
-
-<pre><code>     affiliation affiliation_id    author_id  document_count       name
+<pre class="prettyprint">
+&gt;&gt;&gt; author_result_df = scopus.search_author("AUTHLASTNAME(Zhao) and AUTHFIRST(Kang) and AFFIL(Iowa)")
+&gt;&gt;&gt; print(author_result_df)
+affiliation affiliation_id    author_id  document_count       name
 0  University of Iowa       60024324  36635367700              39  Kang Zhao
 1  University of Iowa       60024324  57077574400               1  Kang Zhao
-</code></pre>
+</pre>
 
 <p>Then we can retrieve more detailed info about the author we are looking for using his/her <strong>author_id</strong>:</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">kang_info_dict</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_author</span><span class="p">(</span><span class="s">'36635367700'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">kang_info_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-<span class="n">dict_keys</span><span class="p">([</span><span class="s">'author-id'</span><span class="p">,</span> <span class="s">'eid'</span><span class="p">,</span> <span class="s">'document-count'</span><span class="p">,</span> <span class="s">'cited-by-count'</span><span class="p">,</span> <span class="s">'citation-count'</span><span class="p">,</span> <span class="s">'name'</span><span class="p">,</span> <span class="s">'last'</span><span class="p">,</span> <span class="s">'first'</span><span class="p">,</span> <span class="s">'indexed-name'</span><span class="p">,</span> <span class="s">'publication-range'</span><span class="p">,</span> <span class="s">'affiliation-current'</span><span class="p">,</span> <span class="s">'journal-history'</span><span class="p">,</span> <span class="s">'affiliation-history'</span><span class="p">])</span></code></pre></figure>
+<pre class="prettyprint">
+&gt;&gt;&gt; kang_info_dict = scopus.retrieve_author('36635367700')
+&gt;&gt;&gt; kang_info_dict.keys()
+dict_keys(['author-id', 'eid', 'document-count', 'cited-by-count', 'citation-count', 'name', 'last', 'first', 'indexed-name', 'publication-range', 'affiliation-current', 'journal-history', 'affiliation-history'])
+</pre>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">kang_info_dict</span><span class="p">[</span><span class="s">'affiliation-history'</span><span class="p">])</span></code></pre></figure>
-
-<pre class="longoutput"><code>id                                               name parent-id  \
+<pre class="prettyprint">
+&gt;&gt;&gt; print(kang_info_dict['affiliation-history'])
+id                                               name parent-id  \
 0   60024324                                 University of Iowa      None   
 1  104227060  University of Iowa, Department of Management S...  60024324   
 2  104227074     University of Iowa, Tippie College of Business  60024324   
@@ -253,28 +270,17 @@ None,
 3      usa, Iowa City, IA, United States  
 4  usa, State College, PA, United States  
 5  usa, State College, PA, United States  
-</code></pre>
+</pre>
 
 <p>We can also search for his publications explicitly</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">kang_pub_df</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">search_author_publication</span><span class="p">(</span><span class="s">'36635367700'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">kang_pub_df</span><span class="p">[[</span><span class="s">'title'</span><span class="p">,</span> <span class="s">'cover_date'</span><span class="p">,</span> <span class="s">'publication_name'</span><span class="p">]]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s">'cover_date'</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></code></pre></figure>
+<pre class="prettyprint">
+&gt;&gt;&gt; kang_pub_df = scopus.search_author_publication('36635367700')
+&gt;&gt;&gt; kang_pub_df[['title', 'cover_date', 'publication_name']].sort_values('cover_date').reset_index(drop=True)
+</pre>
 
 <div>
-    <style scoped="">
-        .dataframe tbody tr th:only-of-type {
-            vertical-align: middle;
-        }
-
-        .dataframe tbody tr th {
-            vertical-align: top;
-        }
-
-        .dataframe thead th {
-            text-align: right;
-        }
-    </style>
-    <table border="1" class="dataframe">
+    <table class="pure-table">
       <thead>
         <tr style="text-align: right;">
           <th></th>
@@ -526,24 +532,26 @@ None,
 
 <h4 id="abstract-retrieval">Abstract retrieval</h4>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">pub_info</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_abstract</span><span class="p">(</span><span class="s">'84905286162'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">pub_info</span><span class="p">)</span>
-<span class="p">{</span><span class="s">'abstract'</span><span class="p">:</span> <span class="s">"Online health communities (OHCs) have become a major source of support for people with health problems. This research tries to improve our understanding of social influence and to identify influential users in OHCs. The outcome can facilitate OHC management, improve community sustainability, and eventually benefit OHC users. Through text mining and sentiment analysis of users' online interactions, the research revealed sentiment dynamics in threaded discussions. A novel metric--the number of influential responding replies--was proposed to directly measure a user's ability to affect the sentiment of others. Using the dataset from a popular OHC, the research demonstrated that the proposed metric is highly effective in identifying influential users. In addition, combining the metric with other traditional measures further improves the identification of influential users. Published by the BMJ Publishing Group Limited. For permission to use (where not already granted under a licence) please go to http://group.bmj.com/group/rights-licensing/permissions."</span><span class="p">,</span>
- <span class="s">'citedby-count'</span><span class="p">:</span> <span class="s">'29'</span><span class="p">,</span>
- <span class="s">'eid'</span><span class="p">:</span> <span class="s">'2-s2.0-84905286162'</span><span class="p">,</span>
- <span class="s">'prism:aggregationType'</span><span class="p">:</span> <span class="s">'Journal'</span><span class="p">,</span>
- <span class="s">'prism:coverDate'</span><span class="p">:</span> <span class="s">'2014-01-01'</span><span class="p">,</span>
- <span class="s">'prism:doi'</span><span class="p">:</span> <span class="s">'10.1136/amiajnl-2013-002282'</span><span class="p">,</span>
- <span class="s">'prism:issn'</span><span class="p">:</span> <span class="s">'1527974X'</span><span class="p">,</span>
- <span class="s">'prism:issueIdentifier'</span><span class="p">:</span> <span class="s">'e2'</span><span class="p">,</span>
- <span class="s">'prism:publicationName'</span><span class="p">:</span> <span class="s">'Journal of the American Medical Informatics Association : JAMIA'</span><span class="p">,</span>
- <span class="s">'prism:url'</span><span class="p">:</span> <span class="s">'http://api.elsevier.com/content/abstract/scopus_id/84905286162'</span><span class="p">,</span>
- <span class="s">'prism:volume'</span><span class="p">:</span> <span class="s">'21'</span><span class="p">,</span>
- <span class="s">'pubmed-id'</span><span class="p">:</span> <span class="s">'24449805'</span><span class="p">,</span>
- <span class="s">'scopus-id'</span><span class="p">:</span> <span class="s">'84905286162'</span><span class="p">,</span>
- <span class="s">'source-id'</span><span class="p">:</span> <span class="s">'23600'</span><span class="p">,</span>
- <span class="s">'srctype'</span><span class="p">:</span> <span class="s">'j'</span><span class="p">,</span>
- <span class="s">'title'</span><span class="p">:</span> <span class="s">'Finding influential users of online health communities: a new metric based on sentiment influence.'</span><span class="p">}</span></code></pre></figure>
+<pre class="prettyprint">
+&gt;&gt;&gt; pub_info = scopus.retrieve_abstract('84905286162')
+&gt;&gt;&gt; print(pub_info)
+{'abstract': "Online health communities (OHCs) have become a major source of support for people with health problems. This research tries to improve our understanding of social influence and to identify influential users in OHCs. The outcome can facilitate OHC management, improve community sustainability, and eventually benefit OHC users. Through text mining and sentiment analysis of users' online interactions, the research revealed sentiment dynamics in threaded discussions. A novel metric--the number of influential responding replies--was proposed to directly measure a user's ability to affect the sentiment of others. Using the dataset from a popular OHC, the research demonstrated that the proposed metric is highly effective in identifying influential users. In addition, combining the metric with other traditional measures further improves the identification of influential users. Published by the BMJ Publishing Group Limited. For permission to use (where not already granted under a licence) please go to http://group.bmj.com/group/rights-licensing/permissions.",
+ 'citedby-count': '29',
+ 'eid': '2-s2.0-84905286162',
+ 'prism:aggregationType': 'Journal',
+ 'prism:coverDate': '2014-01-01',
+ 'prism:doi': '10.1136/amiajnl-2013-002282',
+ 'prism:issn': '1527974X',
+ 'prism:issueIdentifier': 'e2',
+ 'prism:publicationName': 'Journal of the American Medical Informatics Association : JAMIA',
+ 'prism:url': 'http://api.elsevier.com/content/abstract/scopus_id/84905286162',
+ 'prism:volume': '21',
+ 'pubmed-id': '24449805',
+ 'scopus-id': '84905286162',
+ 'source-id': '23600',
+ 'srctype': 'j',
+ 'title': 'Finding influential users of online health communities: a new metric based on sentiment influence.'}
+</pre>
 
 <hr />
 
@@ -554,18 +562,18 @@ None,
 
 <p><strong>Note that the use of <code class="highlighter-rouge">citation overview API</code> needs to be approved by Elsevier.</strong></p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">pub_citations_df</span> <span class="o">=</span> <span class="n">scopus</span><span class="o">.</span><span class="n">retrieve_citation</span><span class="p">(</span><span class="n">scopus_id_array</span><span class="o">=</span><span class="p">[</span><span class="s">'84905286162'</span><span class="p">,</span> <span class="s">'0141607824'</span><span class="p">],</span>
-                                            <span class="n">year_range</span><span class="o">=</span><span class="p">[</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">2014</span><span class="p">])</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">pub_citations_df</span><span class="p">)</span></code></pre></figure>
-
-<pre><code>     scopus_id previous_citation 2010 2011  2012  2013  2014 later_citation  \
+<pre class="prettyprint">
+&gt;&gt;&gt; pub_citations_df = scopus.retrieve_citation(scopus_id_array=['84905286162', '0141607824'],
+                                            year_range=[2010, 2014])
+&gt;&gt;&gt; print(pub_citations_df)
+     scopus_id previous_citation 2010 2011  2012  2013  2014 later_citation  \
 0  84905286162                 0    0    0     0     0     3             26   
 1   0141607824               905  596  802  1057  1323  1451           5324   
 
   total_citation  
 0             29  
 1          11458  
-</code></pre>
+</pre>
 
 <hr />
 
