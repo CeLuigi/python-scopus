@@ -53,10 +53,10 @@
             
                 <li class="nav-header">Documentation</li>
             
-            <li data-order=""><a href="/python-scopus/doc/disambiguition.html">Disambiguity Workaround</a></li>
+            <li data-order=""><a href="/python-scopus/doc/quick-start.html">Quick Start</a></li>
         
             
-            <li data-order=""><a href="/python-scopus/doc/quick-start.html">Quick Start</a></li>
+            <li data-order=""><a href="/python-scopus/doc/disambiguition.html">Disambiguity Workaround</a></li>
         
     
         
@@ -77,10 +77,13 @@
                     </div>
 
                     <div id="content" class="col-sm-10">
-                        <h4 id="last-updated-09-29-2018">Last updated 09-29-2018</h4>
+                        <h4 id="last-updated-10-09-2018">Last updated 10-09-2018</h4>
 
 <h3 id="new">NEW!!!</h3>
-<p>I just upload my workaround for cleaning mixed author profile. See <a href="doc/disambiguition.html"><strong><em>Diambiguity Workaround</em></strong></a> for more details!</p>
+<ul>
+  <li>10-09-2018. Now serital title metadata API is included! See https://dev.elsevier.com/documentation/SerialTitleAPI.wadl</li>
+  <li>09-29-2018. I just upload my workaround for cleaning mixed author profile. See <a href="doc/disambiguition.html"><strong><em>Diambiguity Workaround</em></strong></a> for more details!</li>
+</ul>
 
 <h3 id="citation-and-acknowledgement">Citation and Acknowledgement</h3>
 
@@ -121,21 +124,27 @@
 
 <p>The easiest way of installing PyScopus is to use <code class="highlighter-rouge">pip</code>:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>pip <span class="nb">install </span><span class="nv">pyscopus</span><span class="o">==</span>1.0.0a1</code></pre></figure>
+<pre class="prettyprint lang-bash">
+$ pip install pyscopus
+</pre>
 
 <h5 id="2-manual-installation">2. Manual installation</h5>
 
 <p>You can also clone and install the project from its <a href="https://github.com/zhiyzuo/python-scopus" target="_blank">GitHub homepage</a> like this:</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone https://github.com/zhiyzuo/python-scopus.git
-<span class="nv">$ </span><span class="nb">cd </span>python-scopus/
-<span class="nv">$ </span>python setup.py <span class="nb">install</span></code></pre></figure>
+<pre class="prettyprint lang-bash">
+$ git clone https://github.com/zhiyzuo/python-scopus.git
+$ cd python-scopus/
+$ python setup.py install
+</pre>
 
-<p>A tarball can also be downloaded via PyScopus’s <a href="https://pypi.python.org/pypi/pyscopus/1.0.0a1" target="_blank">PyPI page</a> or <a href="https://github.com/zhiyzuo/python-scopus/tarball/1.0.0a1" target="_blank">this download link</a>.</p>
+<p>A tarball can also be downloaded via PyScopus’s <a href="https://pypi.python.org/pypi/pyscopus/" target="_blank">PyPI page</a> or <a href="https://github.com/zhiyzuo/python-scopus/archive/1.0.2.tar.gz" target="_blank">this download link</a>.</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">tar</span> <span class="nt">-xvzf</span> pyscopus-1.0.0a1.tar.gz
-<span class="nv">$ </span><span class="nb">cd </span>pyscopus-1.0.0a1.tar.gz/
-<span class="nv">$ </span>python setup.py <span class="nb">install</span></code></pre></figure>
+<pre class="prettyprint lang-bash">
+$ tar -xvzf python-scopus-1.0.2.tar.gz
+$ cd python-scopus-1.0.2.tar.gz/
+$ python setup.py install
+</pre>
 
 <p>And then please start to enjoy the easy scraping of data from Scopus.</p>
 

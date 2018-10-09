@@ -53,10 +53,10 @@
             
                 <li class="nav-header">Documentation</li>
             
-            <li data-order=""><a href="/python-scopus/doc/disambiguition.html">Disambiguity Workaround</a></li>
+            <li data-order=""><a href="/python-scopus/doc/quick-start.html">Quick Start</a></li>
         
             
-            <li data-order=""><a href="/python-scopus/doc/quick-start.html">Quick Start</a></li>
+            <li data-order=""><a href="/python-scopus/doc/disambiguition.html">Disambiguity Workaround</a></li>
         
     
         
@@ -83,19 +83,75 @@
     </h2>
 </div>
 
-<p>Sometimes Scopus would mix up people with similar names. I recently come up with a not that difficult method to clean author publication profiles, which needs some manual work. The Jupyter notebook version is <a href="https://github.com/zhiyzuo/python-scopus/blob/master/Disambiguition.ipynb">here</a></p>
+<p><strong>PyScopus</strong>: An example for author disambiguity</p>
+
+<p>Sometimes Scopus would mix up people with similar names. I recently come up with a not that difficult method to clean author publication profiles, which needs some manual work.</p>
 
 <p>If you can think of a better way, please do let me know!</p>
 
 <hr />
 
-<pre class="prettyprint">&gt;&gt;&gt; import pyscopus
+<pre class="prettyprint">
+&gt;&gt;&gt; import pyscopus
 &gt;&gt;&gt; pyscopus.__version__
-'1.0.0a1'
+    '1.0.2'
+</pre>
+
+<pre class="prettyprint">
 &gt;&gt;&gt; from pyscopus import Scopus
 &gt;&gt;&gt; key = 'YOUR_OWN_APIKEY'
 &gt;&gt;&gt; scopus = Scopus(key)
-&gt;&gt;&gt; import utils
+</pre>
+
+<hr />
+
+<p>Wrapper functions for disambiguity:</p>
+
+<pre class="prettyprint">
+&gt;&gt;&gt; import requests, time
+&gt;&gt;&gt; import pandas as pd
+&gt;&gt;&gt; from bs4 import BeautifulSoup as Soup
+&gt;&gt;&gt; BASE_URL = "https://api.elsevier.com/content/abstract/scopus_id/"
+</pre>
+
+<pre class="prettyprint">
+def _check_pub_validity(sid, author_id, author_affil_id_list, apikey):
+    global BASE_URL
+    r = requests.get(BASE_URL+sid, params={'apikey': apikey})
+    soup = Soup(r.content, 'lxml')
+    author_list = soup.find('authors').find_all('author')
+
+    ## go through the author list to find the author first, by matching author id
+    for au in author_list:
+        if au['auid'] == author_id:
+            ## find it and break
+            break
+
+    ## check the affiliation id: note that an author may have a list of affiliations
+    this_affil_id_list = [affil_tag['id'] for affil_tag in au.find_all('affiliation')]
+    ## get the affiliation id and check if there are any overlap
+    if len(set(author_affil_id_list).intersection(set(this_affil_id_list))) &gt; 0:
+        return True
+    return False
+</pre>
+
+<pre class="prettyprint">
+def check_pub_validity(scopus_obj, author_id, author_affil_id_list, apikey):
+    ## first find out all pub
+    pub_df = scopus_obj.search_author_publication(author_id)
+    ## do this for all non-null scopus ids
+    pub_df = pub_df[~pub_df.scopus_id.isnull()]
+    ## list to save all eligble scopus ids
+    eligible_scopus_id_list = list()
+    for i, sid in enumerate(pub_df.scopus_id.values):
+        if (i+1)%5==0:
+            time.sleep(pd.np.random.random()+.3)
+        if _check_pub_validity(sid, author_id, author_affil_id_list, apikey):
+            ## if true, save it
+            eligible_scopus_id_list.append(sid)
+    ## finally, get a subset of the original pub_df
+    filtered_pub_df = pub_df.query("scopus_id in @eligible_scopus_id_list")
+    return filtered_pub_df
 </pre>
 
 <hr />
@@ -127,16 +183,17 @@
 
 <pre class="prettyprint">
 &gt;&gt;&gt; d = {'authfirst': 'Vivek', 'authlastname': 'Singh', 'affiliation': 'Rutgers',
-     'affil_id_list': ['60030623', '60022195', '60007278']
-    }
+         'affil_id_list': ['60030623', '60022195', '60007278']
+        }
 &gt;&gt;&gt; d
-{'authfirst': 'Vivek',
- 'authlastname': 'Singh',
- 'affiliation': 'Rutgers',
- 'affil_id_list': ['60030623', '60022195', '60007278']}
+    {'authfirst': 'Vivek',
+     'authlastname': 'Singh',
+     'affiliation': 'Rutgers',
+     'affil_id_list': ['60030623', '60022195', '60007278']}
 &gt;&gt;&gt; query = "AUTHLASTNAME({}) and AUTHFIRST({}) and AFFIL({})".format(d['authlastname'], d['authfirst'], d['affiliation'])
 &gt;&gt;&gt; author_search_df = scopus.search_author(query)
 &gt;&gt;&gt; author_search_df
+    The history saving thread hit an unexpected error (OperationalError('database is locked',)).History will not be written to the database.
 </pre>
 
 <div>
@@ -156,14 +213,13 @@
       <th>0</th>
       <td>7404651152</td>
       <td>Vivek Kumar N. Singh</td>
-      <td>490</td>
-      <td>Banaras Hindu University</td>
-      <td>60008721</td>
+      <td>491</td>
+      <td>Shri Mata Vaishno Devi University</td>
+      <td>60017187</td>
     </tr>
   </tbody>
 </table>
 </div>
-
 <p><br /></p>
 
 <p>Sometimes we would obtain a list of author profiles for each author. In this case, we only have one and it is clear that the author profile is highly noisy.</p>
@@ -173,21 +229,21 @@
 <pre class="prettyprint">
 &gt;&gt;&gt; author_id = '7404651152'
 &gt;&gt;&gt; author_id, d['affil_id_list']
-('7404651152', ['60030623', '60022195', '60007278'])
+    ('7404651152', ['60030623', '60022195', '60007278'])
 </pre>
 
 <p>The filtering process may take a while, depending on how many documents are mixd up.</p>
 
 <pre class="prettyprint">
-&gt;&gt;&gt; filterd_pub_df = utils.check_pub_validity(scopus, author_id, d['affil_id_list'], apikey)
+&gt;&gt;&gt; filterd_pub_df = check_pub_validity(scopus, author_id, d['affil_id_list'], key)
 &gt;&gt;&gt; filterd_pub_df.shape[0], filterd_pub_df.scopus_id.unique().size, filterd_pub_df.scopus_id.isnull().sum()
-(134, 134, 0)
+    (134, 134, 0)
 </pre>
 
 <p>Obviously, the number of papers is highly reduced. We can now check a random subset to see if the filtered papers make sense for this author.</p>
 
 <pre class="prettyprint">
-&gt;&gt;&gt; filterd_pub_df.iloc[utils.pd.np.random.randint(0, high=134, size=20)][['title', 'publication_name']]
+&gt;&gt;&gt; filterd_pub_df.iloc[pd.np.random.randint(0, high=134, size=20)][['title', 'publication_name']]
 </pre>
 
 <div>
@@ -201,109 +257,108 @@
   </thead>
   <tbody>
     <tr>
-      <th>117</th>
+      <th>118</th>
       <td>Effects of high-energy irradiation on silicon ...</td>
       <td>Optics InfoBase Conference Papers</td>
     </tr>
     <tr>
-      <th>34</th>
-      <td>"They basically like destroyed the school one ...</td>
-      <td>Proceedings of the ACM Conference on Computer ...</td>
+      <th>95</th>
+      <td>Physical-Cyber-Social Computing: Looking Back,...</td>
+      <td>IEEE Internet Computing</td>
     </tr>
     <tr>
-      <th>58</th>
-      <td>Situation recognition from multimodal data</td>
-      <td>MM 2016 - Proceedings of the 2016 ACM Multimed...</td>
-    </tr>
-    <tr>
-      <th>70</th>
-      <td>On-chip mid-infrared gas detection using chalc...</td>
-      <td>Applied Physics Letters</td>
-    </tr>
-    <tr>
-      <th>212</th>
-      <td>Mid-infrared As&lt;inf&gt;2&lt;/inf&gt;Se&lt;inf&gt;3&lt;/inf&gt; chal...</td>
-      <td>IEEE International Conference on Group IV Phot...</td>
-    </tr>
-    <tr>
-      <th>88</th>
-      <td>Geo-intelligence and visualization through big...</td>
-      <td>Geo-Intelligence and Visualization through Big...</td>
-    </tr>
-    <tr>
-      <th>120</th>
-      <td>Effects of high-energy irradiation on silicon ...</td>
+      <th>141</th>
+      <td>Low-stress silicon nitride for mid-infrared mi...</td>
       <td>Optics InfoBase Conference Papers</td>
-    </tr>
-    <tr>
-      <th>206</th>
-      <td>Low loss mid-infrared silicon waveguides by us...</td>
-      <td>Frontiers in Optics, FIO 2012</td>
-    </tr>
-    <tr>
-      <th>151</th>
-      <td>Predicting spending behavior using socio-mobil...</td>
-      <td>Proceedings - SocialCom/PASSAT/BigData/EconCom...</td>
-    </tr>
-    <tr>
-      <th>154</th>
-      <td>Generation of two-cycle pulses and octave-span...</td>
-      <td>Optics Letters</td>
-    </tr>
-    <tr>
-      <th>73</th>
-      <td>Predicting privacy attitudes using phone metadata</td>
-      <td>Lecture Notes in Computer Science (including s...</td>
-    </tr>
-    <tr>
-      <th>259</th>
-      <td>Novel designs for on-chip mid-infrared detecto...</td>
-      <td>Optics InfoBase Conference Papers</td>
-    </tr>
-    <tr>
-      <th>204</th>
-      <td>Engineering spectral variation of FSR by tailo...</td>
-      <td>Integrated Photonics Research, Silicon and Nan...</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>Toward harmonizing self-reported and logged so...</td>
-      <td>Conference on Human Factors in Computing Syste...</td>
-    </tr>
-    <tr>
-      <th>316</th>
-      <td>Adversary aware surveillance systems</td>
-      <td>IEEE Transactions on Information Forensics and...</td>
     </tr>
     <tr>
       <th>194</th>
-      <td>Situation recognition: An evolving problem for...</td>
-      <td>MM 2012 - Proceedings of the 20th ACM Internat...</td>
+      <td>Mid-infrared silicon waveguide resonators with...</td>
+      <td>Materials Research Society Symposium Proceedings</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>Effects of high-energy irradiation on silicon ...</td>
+      <td>Optics InfoBase Conference Papers</td>
+    </tr>
+    <tr>
+      <th>194</th>
+      <td>Mid-infrared silicon waveguide resonators with...</td>
+      <td>Materials Research Society Symposium Proceedings</td>
+    </tr>
+    <tr>
+      <th>89</th>
+      <td>Preface</td>
+      <td>Geo-Intelligence and Visualization through Big...</td>
+    </tr>
+    <tr>
+      <th>179</th>
+      <td>Demonstration of high-Q mid-infrared chalcogen...</td>
+      <td>Optics Letters</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>Low-Stress silicon nitride platform for broadb...</td>
+      <td>Optics InfoBase Conference Papers</td>
+    </tr>
+    <tr>
+      <th>309</th>
+      <td>Situation based control for cyber-physical env...</td>
+      <td>Proceedings - IEEE Military Communications Con...</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>Towards measuring fine-grained diversity using...</td>
+      <td>Proceedings of the 11th International Conferen...</td>
+    </tr>
+    <tr>
+      <th>306</th>
+      <td>Motivating contributors in social media networks</td>
+      <td>1st ACM SIGMM International Workshop on Social...</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>Mid-infrared opto-nanofluidics for label-free ...</td>
+      <td>Optics InfoBase Conference Papers</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>Gradient Polymer Nanofoams for Encrypted Recor...</td>
+      <td>ACS Nano</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>Physical-Cyber-Social Computing: Looking Back,...</td>
+      <td>IEEE Internet Computing</td>
+    </tr>
+    <tr>
+      <th>336</th>
+      <td>Towards environment-to-environment (E2E) multi...</td>
+      <td>MM'08 - Proceedings of the 2008 ACM Internatio...</td>
+    </tr>
+    <tr>
+      <th>144</th>
+      <td>Low-stress silicon nitride platform for broadb...</td>
+      <td>Conference on Lasers and Electro-Optics Europe...</td>
     </tr>
     <tr>
       <th>209</th>
-      <td>Trimming of athermal silicon resonators</td>
-      <td>Integrated Photonics Research, Silicon and Nan...</td>
+      <td>Anisotropic photoluminescence from Er-TeO&lt;inf&gt;...</td>
+      <td>CLEO: Science and Innovations, CLEO_SI 2012</td>
     </tr>
     <tr>
-      <th>116</th>
-      <td>Nonreciprocal racetrack resonator based on vac...</td>
-      <td>Optics Express</td>
+      <th>95</th>
+      <td>Physical-Cyber-Social Computing: Looking Back,...</td>
+      <td>IEEE Internet Computing</td>
     </tr>
     <tr>
-      <th>105</th>
-      <td>Assessing personality using demographic inform...</td>
-      <td>ACM International Conference Proceeding Series</td>
-    </tr>
-    <tr>
-      <th>265</th>
-      <td>Visible light trimming of coupled ring-resonat...</td>
-      <td>2011 Conference on Lasers and Electro-Optics E...</td>
+      <th>71</th>
+      <td>On-chip mid-infrared gas detection using chalc...</td>
+      <td>Applied Physics Letters</td>
     </tr>
   </tbody>
 </table>
 </div>
-
 <p><br /></p>
 
 <p>However, there may still be noise in it (e.g., papers published in optics/photonics venues). We can manually exclude those as well:</p>
@@ -319,13 +374,13 @@
 &gt;&gt;&gt; filterd_pub_df = filterd_pub_df.query("not publication_name.str.lower().str.contains('physics')")
 &gt;&gt;&gt; filterd_pub_df = filterd_pub_df.query("not publication_name.str.lower().str.contains('chip')")
 &gt;&gt;&gt; filterd_pub_df.shape
-(59, 16)
+    (59, 16)
 </pre>
 
 <p>And let’s check again</p>
 
 <pre class="prettyprint">
-&gt;&gt;&gt; filterd_pub_df.iloc[utils.pd.np.random.randint(0, high=59, size=20)][['title', 'publication_name']]
+&gt;&gt;&gt; filterd_pub_df.iloc[pd.np.random.randint(0, high=59, size=20)][['title', 'publication_name']]
 </pre>
 
 <div>
@@ -339,69 +394,29 @@
   </thead>
   <tbody>
     <tr>
-      <th>94</th>
-      <td>Physical-Cyber-Social Computing: Looking Back,...</td>
-      <td>IEEE Internet Computing</td>
+      <th>103</th>
+      <td>Assessing personality using demographic inform...</td>
+      <td>ACM International Conference Proceeding Series</td>
     </tr>
     <tr>
-      <th>58</th>
-      <td>Situation recognition from multimodal data</td>
-      <td>MM 2016 - Proceedings of the 2016 ACM Multimed...</td>
+      <th>44</th>
+      <td>Examining information search behaviors in smal...</td>
+      <td>Proceedings of the Association for Information...</td>
     </tr>
     <tr>
-      <th>151</th>
-      <td>Predicting spending behavior using socio-mobil...</td>
-      <td>Proceedings - SocialCom/PASSAT/BigData/EconCom...</td>
+      <th>44</th>
+      <td>Examining information search behaviors in smal...</td>
+      <td>Proceedings of the Association for Information...</td>
     </tr>
     <tr>
-      <th>28</th>
-      <td>Toward multimodal cyberbullying detection</td>
-      <td>Conference on Human Factors in Computing Syste...</td>
+      <th>18</th>
+      <td>Social bridges in urban purchase behavior</td>
+      <td>ACM Transactions on Intelligent Systems and Te...</td>
     </tr>
     <tr>
-      <th>61</th>
+      <th>62</th>
       <td>If it looks like a spammer and behaves like a ...</td>
       <td>International Journal of Information Security</td>
-    </tr>
-    <tr>
-      <th>134</th>
-      <td>Cyber bullying detection using social and text...</td>
-      <td>SAM 2014 - Proceedings of the 3rd Internationa...</td>
-    </tr>
-    <tr>
-      <th>45</th>
-      <td>From sensors to sense-making: Opportunities an...</td>
-      <td>Proceedings of the Association for Information...</td>
-    </tr>
-    <tr>
-      <th>45</th>
-      <td>From sensors to sense-making: Opportunities an...</td>
-      <td>Proceedings of the Association for Information...</td>
-    </tr>
-    <tr>
-      <th>297</th>
-      <td>Structural analysis of the emerging event-web</td>
-      <td>Proceedings of the 19th International Conferen...</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>Using cognitive dissonance theory to understan...</td>
-      <td>Proceedings of the Association for Information...</td>
-    </tr>
-    <tr>
-      <th>88</th>
-      <td>Geo-intelligence and visualization through big...</td>
-      <td>Geo-Intelligence and Visualization through Big...</td>
-    </tr>
-    <tr>
-      <th>87</th>
-      <td>Preface</td>
-      <td>Geo-Intelligence and Visualization through Big...</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>"They basically like destroyed the school one ...</td>
-      <td>Proceedings of the ACM Conference on Computer ...</td>
     </tr>
     <tr>
       <th>152</th>
@@ -409,39 +424,78 @@
       <td>WWW 2013 Companion - Proceedings of the 22nd I...</td>
     </tr>
     <tr>
-      <th>73</th>
-      <td>Predicting privacy attitudes using phone metadata</td>
-      <td>Lecture Notes in Computer Science (including s...</td>
+      <th>5</th>
+      <td>Are you altruistic? Your mobile phone could tell</td>
+      <td>2017 IEEE SmartWorld Ubiquitous Intelligence a...</td>
+    </tr>
+    <tr>
+      <th>103</th>
+      <td>Assessing personality using demographic inform...</td>
+      <td>ACM International Conference Proceeding Series</td>
+    </tr>
+    <tr>
+      <th>247</th>
+      <td>EventShop: From heterogeneous web streams to p...</td>
+      <td>Proceedings of the 4th Annual ACM Web Science ...</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>LTA 2016 - The first workshop on lifelogging t...</td>
+      <td>MM 2016 - Proceedings of the 2016 ACM Multimed...</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Effect of gamma exposure on chalcogenide glass...</td>
+      <td>IEEE Radiation Effects Data Workshop</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>Physical-Cyber-Social Computing: Looking Back,...</td>
+      <td>IEEE Internet Computing</td>
+    </tr>
+    <tr>
+      <th>298</th>
+      <td>Structural analysis of the emerging event-web</td>
+      <td>Proceedings of the 19th International Conferen...</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>New Signals in Multimedia Systems and Applicat...</td>
+      <td>IEEE Multimedia</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>EventShop: Recognizing situations in web data ...</td>
+      <td>WWW 2013 Companion - Proceedings of the 22nd I...</td>
+    </tr>
+    <tr>
+      <th>317</th>
+      <td>Adversary aware surveillance systems</td>
+      <td>IEEE Transactions on Information Forensics and...</td>
     </tr>
     <tr>
       <th>30</th>
-      <td>Introduction to the special issue on advances ...</td>
-      <td>ACM Transactions on Internet Technology</td>
-    </tr>
-    <tr>
-      <th>74</th>
-      <td>Situation recognition using eventShop</td>
-      <td>Situation Recognition Using EventShop</td>
-    </tr>
-    <tr>
-      <th>301</th>
-      <td>From microblogs to social images: Event analyt...</td>
-      <td>MIR 2010 - Proceedings of the 2010 ACM SIGMM I...</td>
-    </tr>
-    <tr>
-      <th>29</th>
       <td>Toward harmonizing self-reported and logged so...</td>
       <td>Conference on Human Factors in Computing Syste...</td>
     </tr>
     <tr>
-      <th>94</th>
-      <td>Physical-Cyber-Social Computing: Looking Back,...</td>
-      <td>IEEE Internet Computing</td>
+      <th>74</th>
+      <td>Predicting privacy attitudes using phone metadata</td>
+      <td>Lecture Notes in Computer Science (including s...</td>
+    </tr>
+    <tr>
+      <th>89</th>
+      <td>Preface</td>
+      <td>Geo-Intelligence and Visualization through Big...</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>Probing the interconnections between geo-explo...</td>
+      <td>UbiComp 2016 - Proceedings of the 2016 ACM Int...</td>
     </tr>
   </tbody>
 </table>
 </div>
-
 <p><br /></p>
 
 <p>Now it is much better and we can use this cleaned paper list for this focal author.</p>

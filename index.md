@@ -3,10 +3,12 @@ layout: default
 title: "Get Started"
 ---
 
-#### Last updated 09-29-2018
+#### Last updated 10-09-2018
 
 ### NEW!!!
-I just upload my workaround for cleaning mixed author profile. See [___Diambiguity Workaround___](doc/disambiguition.html) for more details!
+- 10-09-2018. Now serital title metadata API is included! See https://dev.elsevier.com/documentation/SerialTitleAPI.wadl
+- 09-29-2018. I just upload my workaround for cleaning mixed author profile. See [___Diambiguity Workaround___](doc/disambiguition.html) for more details!
+
 
 
 ### Citation and Acknowledgement
@@ -41,27 +43,27 @@ PyScopus requires:
 
 The easiest way of installing PyScopus is to use `pip`:
 
-{%highlight bash%}
-$ pip install pyscopus==1.0.0a1
-{%endhighlight%}
+<pre class="prettyprint lang-bash">
+$ pip install pyscopus
+</pre>
 
 ##### 2. Manual installation
 
 You can also clone and install the project from its <a href="https://github.com/zhiyzuo/python-scopus" target="_blank">GitHub homepage</a> like this:
 
-{%highlight bash%}
+<pre class="prettyprint lang-bash">
 $ git clone https://github.com/zhiyzuo/python-scopus.git
 $ cd python-scopus/
 $ python setup.py install
-{%endhighlight%}
+</pre>
 
-A tarball can also be downloaded via PyScopus's <a href="https://pypi.python.org/pypi/pyscopus/1.0.0a1" target="_blank">PyPI page</a> or <a href="https://github.com/zhiyzuo/python-scopus/tarball/1.0.0a1" target="_blank">this download link</a>.
+A tarball can also be downloaded via PyScopus's <a href="https://pypi.python.org/pypi/pyscopus/" target="_blank">PyPI page</a> or <a href="https://github.com/zhiyzuo/python-scopus/archive/1.0.2.tar.gz" target="_blank">this download link</a>.
 
-{%highlight bash%}
-$ tar -xvzf pyscopus-1.0.0a1.tar.gz
-$ cd pyscopus-1.0.0a1.tar.gz/
+<pre class="prettyprint lang-bash">
+$ tar -xvzf python-scopus-1.0.2.tar.gz
+$ cd python-scopus-1.0.2.tar.gz/
 $ python setup.py install
-{%endhighlight%}
+</pre>
 
 And then please start to enjoy the easy scraping of data from Scopus.
 
